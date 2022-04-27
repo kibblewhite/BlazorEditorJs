@@ -21,17 +21,4 @@
 		<PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="2.1.161" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Folder Include="wwwroot\lib\codex.editor.header\" />
-	  <Folder Include="wwwroot\lib\codex.editor.personality\src\" />
-	  <Folder Include="wwwroot\lib\editorjs\checklist\.github\" />
-	  <Folder Include="wwwroot\lib\editorjs\types\events\" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <None Include="wwwroot\lib\editorjs\code\.github\workflows\npm-publish.yml" />
-	  <None Include="wwwroot\lib\editorjs\example\tools\image\dev\.tmp\.gitignore" />
-	  <None Include="wwwroot\lib\editorjs\link\.github\workflows\npm-publish.yml" />
-	</ItemGroup>
-
 </Project>
