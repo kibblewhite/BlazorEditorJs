@@ -1,0 +1,68 @@
+{
+  "version": "1.0",
+  "defaultProvider": "unpkg",
+  "libraries": [
+    {
+      "library": "@editorjs/editorjs@latest",
+      "destination": "wwwroot/lib/editorjs/"
+    },
+    {
+      "library": "codex.editor.checklist@latest",
+      "destination": "wwwroot/lib/codex.editor.checklist/"
+    },
+    {
+      "library": "codex.editor.delimiter@latest",
+      "destination": "wwwroot/lib/codex.editor.delimiter/"
+    },
+    {
+      "library": "codex.editor.embed@latest",
+      "destination": "wwwroot/lib/codex.editor.embed/"
+    },
+    {
+      "library": "codex.editor.header@latest",
+      "destination": "wwwroot/lib/codex.editor.header/"
+    },
+    {
+      "provider": "jsdelivr",
+      "library": "codex.editor.image@latest",
+      "destination": "wwwroot/lib/codex.editor.image/"
+    },
+    {
+      "provider": "jsdelivr",
+      "library": "codex.editor.list@latest",
+      "destination": "wwwroot/lib/codex.editor.list/"
+    },
+    {
+      "library": "codex.editor.marker@latest",
+      "destination": "wwwroot/lib/codex.editor.marker/"
+    },
+    {
+      "library": "codex.editor.quote@latest",
+      "destination": "wwwroot/lib/codex.editor.quote/"
+    },
+    {
+      "library": "codex.editor.simple-image@latest",
+      "destination": "wwwroot/lib/codex.editor.simple-image/"
+    },
+    {
+      "library": "codex.editor.table@latest",
+      "destination": "wwwroot/lib/codex.editor.table/"
+    },
+    {
+      "library": "codex.editor.warning@latest",
+      "destination": "wwwroot/lib/codex.editor.warning/"
+    },
+    {
+      "library": "@editorjs/link@latest",
+      "destination": "wwwroot/lib/editorjs/link/"
+    },
+    {
+      "library": "@editorjs/inline-code@latest",
+      "destination": "wwwroot/lib/editorjs/inline-code/"
+    },
+    {
+      "library": "@editorjs/code@latest",
+      "destination": "wwwroot/lib/editorjs/code/"
+    }
+  ]
+}

@@ -348,3 +348,7 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+
+# Ignore these as they are built by the libman.json process
+/BlazorApp/wwwroot/lib
+/EditorJS/wwwroot/lib

@@ -1,0 +1,50 @@
+﻿@page "/"
+@using EditorJS
+@using System.Text.Json.Nodes
+
+<PageTitle>Blazor App for EditorJS</PageTitle>
+
+<div class="btn-group" role="group">
+    <button type="button" class="btn btn-outline-primary" @onclick="OnClick">Submit</button>
+</div>
+
+<Editor Id="editorjs-blazor" Name="editorjs-blazor" @bind-Value="@EditorValue" Style="margin-top: 20px; border: thin dashed grey; padding: 0 20px 0 20px;" />
+
+<hr />
+
+<div class="btn-group" role="group">
+    <button type="button" class="btn btn-outline-primary" @onclick="OnClickSecondEditor">Submit Second Editor Content</button>
+    <button type="button" class="btn btn-outline-primary" @onclick="OnClickTriggerRender">Trigger Render</button>
+</div>
+
+<Editor Id="editorjs-blazor-02" Name="editorjs-blazor-02" @bind-Value="@EditorValue02" Style="margin-top: 20px; border: thin dashed grey; padding: 0 20px 0 20px;" />
+
+
+@code
+{
+    public JsonObject? EditorValue { get; set; }
+    public JsonObject? EditorValue02 { get; set; }
+
+    public Index()
+    {
+        EditorValue = JsonObject.Parse(Resource.JSON)?.AsObject();
+    }
+
+    private async Task OnClickTriggerRender()
+    {
+        EditorValue02 = JsonObject.Parse(Resource.JSON)?.AsObject();
+        await Task.FromResult(true);
+    }
+
+    private async Task OnClickSecondEditor()
+    {
+        _ = EditorValue02;
+        await Task.FromResult(true);
+    }
+
+    private async Task OnClick()
+    {
+        _ = EditorValue;
+        await Task.FromResult(true);
+    }
+}
