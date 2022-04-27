@@ -89,6 +89,7 @@ export function init(id, jsob, instance, callback) {
 export function render(id, jsob) {
     // How does one get the already instantiated instance of the Editor JS by its id value when there are two or more instances of editorjs running in the same browser?
     // Currently ```const editor = new EditorJS({ holder: "my-id"});``` I no longer have access to the const editor property, so I would like to use the id "my-id" to get hold of the instance. I'm struggling to find documentation to confirm or reject if this is possible. I do hope it's possible to do this?
+    // https://github.com/codex-team/editor.js/issues/2032
 
     console.log("render", id, jsob);
     //let editor = new EditorJS({
@@ -96,4 +97,6 @@ export function render(id, jsob) {
     //});
     //editor.clear();
     //editor.render(jsob);
+    // https://stackoverflow.com/questions/66334297/how-to-load-blocks-data-into-editorjs
+    // https://editorjs.io/blocks#render
 }
