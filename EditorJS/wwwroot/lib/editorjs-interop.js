@@ -74,6 +74,13 @@
 
                 embed: Embed,
 
+                code: CodeTool,
+
+                inlineCode: {
+                    class: InlineCode,
+                    shortcut: 'CMD+SHIFT+M',
+                },
+
                 table: {
                     class: Table,
                     inlineToolbar: true,
