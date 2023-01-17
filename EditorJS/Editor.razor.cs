@@ -4,30 +4,23 @@ public partial class Editor
 {
     [Inject] public IJSRuntime? JSRuntime { get; set; }
     [Parameter] public EventCallback<JsonObject> ValueChanged { get; set; }
-
-    [Parameter] public string Id { get; init; } = default!;
-    [Parameter] public string? Name { get; init; }
-    [Parameter] public string? Style { get; init; }
     [Parameter] public JsonObject Value
     {
-        get => _value ??= new JsonObject();
-        set
-        {
-            if (_value == value) { return; }
-            _value = value;
-
-            // https://github.com/dotnet/aspnetcore/issues/22394
-            Task render = Task.Run(() => _editor_js_interop?.Render(value));
-        }
+        get => _value;
+        set => _value = value;
     }
 
-    private JsonObject? _value;
+    [Parameter] public required string Id { get; init; }
+    [Parameter] public string? Name { get; init; }
+    [Parameter] public string? Style { get; init; }
+
+    private JsonObject _value = new();
     private EditorJsInterop? _editor_js_interop;
 
     protected override async Task OnInitializedAsync()
     {
         ArgumentNullException.ThrowIfNull(JSRuntime);
-        _editor_js_interop = new(Id, _value, JSRuntime, OnContentChangedRequestAsync);
+        _editor_js_interop = new(Id, Value, JSRuntime, OnContentChangedRequestAsync);
         await base.OnInitializedAsync();
     }
 
@@ -38,10 +31,35 @@ public partial class Editor
         await _editor_js_interop.Init();
     }
 
+    /// <summary>
+    /// Handles changes made in the editorjs by updating the data model and invoking the user-defined event callback.
+    /// </summary>
+    /// <remarks>
+    /// This method uses the <see cref="EqualityComparer{T}"/> to check for differences between the current and new values,
+    /// in order to determine if the <see cref="ValueChanged">user-defined event callback</see> needs to be invoked and
+    /// the data model needs to be updated.
+    /// </remarks>
+    /// <param name="jsob">The updated JSON object that represents the new value in the editorjs.</param>
+    /// <returns>A task that represents the asynchronous operation.</returns>
     protected async Task OnContentChangedRequestAsync(JsonObject jsob)
     {
-        if (_value == jsob) { return; }
-        _value = jsob;
+        if (EqualityComparer<JsonObject>.Default.Equals(Value, jsob) is true) { return; }
         await ValueChanged.InvokeAsync(jsob);
+        Value = jsob;
+    }
+
+    /// <summary>
+    /// Renders the editorjs with the new provided value, overriding the current value.
+    /// This method uses <see cref="EqualityComparer{T}"/> to check if the new value is equal to the current value and if so, it will not execute the render function.
+    /// </summary>
+    /// <param name="jsob">The new value to be rendered in the editorjs</param>
+    /// <returns>A task that represents the asynchronous rendering operation.</returns>
+    public async Task RenderAsync(JsonObject jsob)
+    {
+        ArgumentNullException.ThrowIfNull(_editor_js_interop);
+        if (EqualityComparer<JsonObject>.Default.Equals(Value, jsob) is true) { return; }
+        await ValueChanged.InvokeAsync(jsob);
+        await _editor_js_interop.Render(jsob);
+        Value = jsob;
     }
 }

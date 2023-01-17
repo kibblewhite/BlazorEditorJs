@@ -35,14 +35,14 @@ internal class EditorJsInterop : IAsyncDisposable
     {
         if (_module_task is null) { return; }
         IJSObjectReference module = await _module_task.Value;
-        await module.InvokeVoidAsync("init", _id, _jsob, DotNetObjectReference.Create(this), nameof(OnChangeAsync));
+        await module.InvokeVoidAsync("editorjs.init", _id, _jsob, DotNetObjectReference.Create(this), nameof(OnChangeAsync));
     }
 
     public async Task Render(JsonObject jsob)
     {
         if (_module_task is null) { return; }
         IJSObjectReference module = await _module_task.Value;
-        await module.InvokeVoidAsync("render", _id, jsob);
+        await module.InvokeVoidAsync("editorjs.render", _id, jsob);
     }
 
     [JSInvokable]

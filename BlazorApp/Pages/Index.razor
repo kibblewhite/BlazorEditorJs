@@ -5,46 +5,20 @@
 <PageTitle>Blazor App for EditorJS</PageTitle>
 
 <div class="btn-group" role="group">
-    <button type="button" class="btn btn-outline-primary" @onclick="OnClick">Submit</button>
+    <button type="button" class="btn btn-outline-primary" @onclick="CheckEditorValue">Check Value (Console)</button>
 </div>
 
-<Editor Id="editorjs-blazor" Name="editorjs-blazor" @bind-Value="@EditorValue" Style="margin-top: 20px; border: thin dashed grey; padding: 0 20px 0 20px;" />
+<Editor Id="editorjs-blazor" Name="editorjs-blazor" Value="EditorValue" ValueChanged="OnEditorValueChanged" Style="margin-top: 20px; border: thin dashed grey; padding: 0 20px 0 20px;" />
 
 <hr />
 
 <div class="btn-group" role="group">
-    <button type="button" class="btn btn-outline-primary" @onclick="OnClickSecondEditor">Submit Second Editor Content</button>
-    <button type="button" class="btn btn-outline-primary" @onclick="OnClickTriggerRender">Trigger Render</button>
+    <button type="button" class="btn btn-outline-primary" @onclick="CopyValueAsync">Copy values from first editor...</button>
 </div>
 
-<Editor Id="editorjs-blazor-02" Name="editorjs-blazor-02" @bind-Value="@EditorValue02" Style="margin-top: 20px; border: thin dashed grey; padding: 0 20px 0 20px;" />
+@*<div class="btn-group" role="group">
+    <button type="button" class="btn btn-outline-primary" @onclick="OnClickSecondEditor">Submit Second Editor Content</button>
+    <button type="button" class="btn btn-outline-primary" @onclick="OnClickTriggerRender">Trigger Render</button>
+</div>*@
 
-
-@code
-{
-    public JsonObject? EditorValue { get; set; }
-    public JsonObject? EditorValue02 { get; set; }
-
-    public Index()
-    {
-        EditorValue = JsonObject.Parse(Resource.JSON)?.AsObject();
-    }
-
-    private async Task OnClickTriggerRender()
-    {
-        EditorValue02 = JsonObject.Parse(Resource.JSON)?.AsObject();
-        await Task.FromResult(true);
-    }
-
-    private async Task OnClickSecondEditor()
-    {
-        _ = EditorValue02;
-        await Task.FromResult(true);
-    }
-
-    private async Task OnClick()
-    {
-        _ = EditorValue;
-        await Task.FromResult(true);
-    }
-}
+<Editor @ref="editor_02" Id="editorjs-blazor-02" Name="editorjs-blazor-02" Value="EditorValue02" ValueChanged="OnEditorValue02Changed" Style="margin-top: 20px; border: thin dashed grey; padding: 0 20px 0 20px;" />
