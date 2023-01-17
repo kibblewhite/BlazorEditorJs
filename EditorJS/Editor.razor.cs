@@ -28,7 +28,7 @@ public partial class Editor
     {
         if (firstRender is false) { return; }
         ArgumentNullException.ThrowIfNull(_editor_js_interop);
-        await _editor_js_interop.Init();
+        await _editor_js_interop.InitAsync();
     }
 
     /// <summary>
@@ -59,7 +59,7 @@ public partial class Editor
         ArgumentNullException.ThrowIfNull(_editor_js_interop);
         if (EqualityComparer<JsonObject>.Default.Equals(Value, jsob) is true) { return; }
         await ValueChanged.InvokeAsync(jsob);
-        await _editor_js_interop.Render(jsob);
+        await _editor_js_interop.RenderAsync(jsob);
         Value = jsob;
     }
 }
