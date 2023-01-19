@@ -95,12 +95,12 @@ With the above config, the output might look a litle like this:
 ```json
 {
     "linkTools": {
-        Class: LinkTool
+        "Class": LinkTool
     }
 }
 ```
 
-
+---
 
 ```json
 {
@@ -109,8 +109,8 @@ With the above config, the output might look a litle like this:
             "OptionsNamingScheme": "CamelCase"
         },
         "options": {
-            inlineToolbar: true,
-            shortcut: 'CMD+SHIFT+L'
+            "inlineToolbar": true,
+            "shortcut": "CMD+SHIFT+L"
         }
     }
 }
@@ -120,9 +120,9 @@ With the above config, the output might look a litle like this:
 ```json
 {
     "list": {
-        Class: List,
-        inlineToolbar: true,
-        shortcut: 'CMD+SHIFT+L'
+        "Class": List,
+        "inlineToolbar": true,
+        "shortcut": "CMD+SHIFT+L"
     }
 }
 ```
