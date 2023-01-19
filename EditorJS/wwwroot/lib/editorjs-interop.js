@@ -19,91 +19,91 @@
 
     },
 
-    init(id, jsob, load_plugins, instance, callback) {
+    _merge_tool_options(class_fn, default_optons, tool_options) {
+        tool_options = Object.assign(default_optons, tool_options);
+        tool_options.class = class_fn;
+        return tool_options;
+    },
+
+    init(id, jsob, tool_options, instance, callback) {
 
         let tools = {};
 
-        if (typeof window.Header !== 'undefined') {
+        if (typeof window.Header !== 'undefined' && typeof tool_options.header !== 'undefined') {
             tools = Object.assign(tools, {
-                header: {
-                    class: Header,
+                header: editorjs._merge_tool_options(Header, {
                     inlineToolbar: ['marker', 'link'],
                     config: {
                         placeholder: 'Header'
                     },
                     shortcut: 'CMD+SHIFT+H'
-                }
+                }, tool_options.header)
             });
         }
 
-        if (typeof window.LinkTool !== 'undefined') {
+        if (typeof window.LinkTool !== 'undefined' && typeof tool_options.linkTool !== 'undefined') {
             tools = Object.assign(tools, {
-                linkTool: LinkTool
+                linkTool: editorjs._merge_tool_options(LinkTool, LinkTool, tool_options.linkTool)
             });
         }
 
-        if (typeof window.List !== 'undefined') {
+        if (typeof window.List !== 'undefined' && typeof tool_options.list !== 'undefined') {
             tools = Object.assign(tools, {
-                list: {
-                    class: List,
+                list: editorjs._merge_tool_options(List, {
                     inlineToolbar: true,
                     shortcut: 'CMD+SHIFT+L'
-                }
+                }, tool_options.list)
             });
         }
 
-        if (typeof window.NestedList !== 'undefined') {
+        if (typeof window.NestedList !== 'undefined' && typeof tool_options.nestedList !== 'undefined') {
             tools = Object.assign(tools, {
-                list: {
-                    class: NestedList,
+                list: editorjs._merge_tool_options(NestedList, {
                     inlineToolbar: true,
                     config: {
                         defaultStyle: 'unordered'
-                    },
-                }
+                    }
+                }, tool_options.list) 
             });
         }
 
-        if (typeof window.Marker !== 'undefined') {
+        if (typeof window.Marker !== 'undefined' && typeof tool_options.marker !== 'undefined') {
             tools = Object.assign(tools, {
-                marker: {
-                    class: Marker,
+                marker: editorjs._merge_tool_options(Marker, {
                     shortcut: 'CMD+SHIFT+M'
-                }
+                }, tool_options.marker)
             });
         }
 
-        if (typeof window.Warning !== 'undefined') {
+        if (typeof window.Warning !== 'undefined' && typeof tool_options.warning !== 'undefined') {
             tools = Object.assign(tools, {
-                warning: Warning
+                warning: editorjs._merge_tool_options(Warning, Warning, tool_options.warning)
             });
         }
 
-        if (typeof window.Checklist !== 'undefined') {
+        if (typeof window.Checklist !== 'undefined' && typeof tool_options.checklist !== 'undefined') {
             tools = Object.assign(tools, {
-                checklist: {
-                    class: Checklist,
+                checklist: editorjs._merge_tool_options(Checklist, {
                     inlineToolbar: true
-                }
+                }, tool_options.checklist)
             });
         }
 
-        if (typeof window.CodeTool !== 'undefined') {
+        if (typeof window.CodeTool !== 'undefined' && typeof tool_options.code !== 'undefined') {
             tools = Object.assign(tools, {
-                code: CodeTool
+                code: editorjs._merge_tool_options(CodeTool, CodeTool, tool_options.checklist)
             });
         }
 
-        if (typeof window.Delimiter !== 'undefined') {
+        if (typeof window.Delimiter !== 'undefined' && typeof tool_options.delimiter !== 'undefined') {
             tools = Object.assign(tools, {
-                delimiter: Delimiter
+                delimiter: editorjs._merge_tool_options(Delimiter, Delimiter, tool_options.delimiter)
             });
         }
 
-        if (typeof window.Embed !== 'undefined') {
+        if (typeof window.Embed !== 'undefined' && typeof tool_options.embed !== 'undefined') {
             tools = Object.assign(tools, {
-                embed: {
-                    class: Embed,
+                embed: editorjs._merge_tool_options(Embed, {
                     config: {
                         services: {
                             youtube: true,
@@ -114,51 +114,45 @@
                             instagram : true
                         }
                     }
-                }
+                }, tool_options.embed)
             });
         }
 
-        if (typeof window.SimpleImage !== 'undefined') {
+        if (typeof window.SimpleImage !== 'undefined' && typeof tool_options.simpleImage !== 'undefined') {
             tools = Object.assign(tools, {
-                image: SimpleImage
+                image: editorjs._merge_tool_options(SimpleImage, SimpleImage, tool_options.simpleImage)
             });
         }
 
-        if (typeof window.InlineCode !== 'undefined') {
+        if (typeof window.InlineCode !== 'undefined' && typeof tool_options.inlineCode !== 'undefined') {
             tools = Object.assign(tools, {
-                inlineCode: {
-                    class: InlineCode,
+                inlineCode: editorjs._merge_tool_options(InlineCode, {
                     shortcut: 'CMD+SHIFT+M',
-                }
+                }, tool_options.inlineCode) 
             });
         }
 
-        if (typeof window.Quote !== 'undefined') {
+        if (typeof window.Quote !== 'undefined' && typeof tool_options.quote !== 'undefined') {
             tools = Object.assign(tools, {
-                quote: {
-                    class: Quote,
+                quote: editorjs._merge_tool_options(Quote, {
                     inlineToolbar: true,
                     config: {
                         quotePlaceholder: 'Enter a quote',
                         captionPlaceholder: 'Quote\'s author',
                     },
                     shortcut: 'CMD+SHIFT+O'
-                }
+                }, tool_options.quote)
             });
         }
 
-        if (typeof window.Table !== 'undefined') {
+        if (typeof window.Table !== 'undefined' && typeof tool_options.table !== 'undefined') {
             tools = Object.assign(tools, {
-                table: {
-                    class: Table,
+                table: editorjs._merge_tool_options(Table, {
                     inlineToolbar: true,
                     shortcut: 'CMD+ALT+T'
-                }
+                }, tool_options.table)
             });
         }
-
-        console.log('load_plugins', load_plugins);
-        console.log('tools', tools);
 
         let options = {
             data: jsob,
@@ -189,7 +183,7 @@
         editorjs_element.render(jsob);
     },
 
-    debounce(callback, delay = 250) {
+    debounce(callback, delay = 320) {
         let timeoutId
         return (...args) => {
             clearTimeout(timeoutId)

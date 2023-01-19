@@ -118,6 +118,6 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="JSON" xml:space="preserve">
-    <value>{"time":1651073717737,"blocks":[{"id":"KgrM3aNM-n","type":"header","data":{"text":"\u003Cmark class=\u0022cdx-marker\u0022\u003E\u003Ca href=\u0022http://google.com\u0022\u003EHeylo\u003C/a\u003E\u003C/mark\u003E","level":3}},{"id":"NaTtEbbeRT","type":"paragraph","data":{"text":"Heylo World"}},{"id":"QdqCFpKBAm","type":"list","data":{"style":"ordered","items":["One","Two","Three"]}},{"id":"m-onbmz6BZ","type":"quote","data":{"text":"Ohhh interesting...","caption":"by Me!","alignment":"left"}}],"version":"2.24.0"}</value>
+    <value>{"time":1674141735889,"blocks":[{"id":"KgrM3aNM-n","type":"header","data":{"text":"&lt;mark class=\"cdx-marker\"&gt;&lt;a href=\"http://google.com\"&gt;Heylo&lt;/a&gt;&lt;/mark&gt;","level":3}},{"id":"NaTtEbbeRT","type":"paragraph","data":{"text":"Heylo World"}},{"id":"QdqCFpKBAm","type":"list","data":{"style":"ordered","items":[{"content":"A: One","items":[{"content":"B: Two","items":[]}]},{"content":"A: Three","items":[{"content":"B: Four","items":[{"content":"C: Five","items":[]}]},{"content":"B: Six","items":[]},{"content":": Seven","items":[]}]}]}},{"id":"m-onbmz6BZ","type":"quote","data":{"text":"Ohhh interesting...","caption":"by Me!","alignment":"left"}}],"version":"2.26.4"}</value>
   </data>
 </root>

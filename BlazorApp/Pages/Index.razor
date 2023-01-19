@@ -5,10 +5,10 @@
 <PageTitle>Blazor App for EditorJS</PageTitle>
 
 <div class="btn-group" role="group">
-    <button type="button" class="btn btn-outline-primary" @onclick="CheckEditorValue">Check Value (Console)</button>
+    <button type="button" class="btn btn-outline-primary" @onclick="CheckEditorValueAsync">Check Value (Console)</button>
 </div>
 
-<Editor Id="editorjs-blazor" Name="editorjs-blazor" Value="EditorValue" ValueChanged="OnEditorValueChanged" Style="margin-top: 20px; border: thin dashed grey; padding: 0 20px 0 20px;" />
+<Editor Id="editorjs-blazor" Name="editorjs-blazor" Value="EditorValue" ValueChanged="OnEditorValueChanged" Tools="EditorTools" Style="margin-top: 20px; border: thin dashed grey; padding: 0 20px 0 20px;" />
 
 <hr />
 
@@ -16,9 +16,4 @@
     <button type="button" class="btn btn-outline-primary" @onclick="CopyValueAsync">Copy values from first editor...</button>
 </div>
 
-@*<div class="btn-group" role="group">
-    <button type="button" class="btn btn-outline-primary" @onclick="OnClickSecondEditor">Submit Second Editor Content</button>
-    <button type="button" class="btn btn-outline-primary" @onclick="OnClickTriggerRender">Trigger Render</button>
-</div>*@
-
-<Editor @ref="editor_02" Id="editorjs-blazor-02" Name="editorjs-blazor-02" Value="EditorValue02" ValueChanged="OnEditorValue02Changed" PluginsCsv="Header,NestedList" Style="margin-top: 20px; border: thin dashed grey; padding: 0 20px 0 20px;" />
+<Editor @ref="editor_02" Id="editorjs-blazor-02" Name="editorjs-blazor-02" Value="EditorValue02" ValueChanged="OnEditorValue02Changed" Tools="EditorTools02" Style="margin-top: 20px; border: thin dashed grey; padding: 0 20px 0 20px;" />

@@ -2,7 +2,7 @@ namespace EditorJS;
 
 public partial class Editor
 {
-    [Inject] public IJSRuntime? JSRuntime { get; set; }
+    [Inject] public required IJSRuntime JSRuntime { get; set; }
     [Parameter] public EventCallback<JsonObject> ValueChanged { get; set; }
     [Parameter] public JsonObject Value
     {
@@ -14,11 +14,7 @@ public partial class Editor
     [Parameter] public string? Name { get; init; }
     [Parameter] public string? Style { get; init; }
 
-    /// <summary>
-    /// A comma separated string of the plugins to load.
-    /// If left empty or null, the editor will load all available supported plugins
-    /// </summary>
-    [Parameter] public string? PluginsCsv { get; init; }
+    [Parameter] public required JsonObject Tools { get; init; }
 
     private JsonObject _value = new();
     private EditorJsInterop? _editor_js_interop;
@@ -26,7 +22,7 @@ public partial class Editor
     protected override async Task OnInitializedAsync()
     {
         ArgumentNullException.ThrowIfNull(JSRuntime);
-        _editor_js_interop = new(Id, Value, PluginsCsv, JSRuntime, OnContentChangedRequestAsync);
+        _editor_js_interop = new(Id, Value, Tools, JSRuntime, OnContentChangedRequestAsync);
         await base.OnInitializedAsync();
     }
 
