@@ -42,3 +42,33 @@ Or load only the plugins that is required (editorjs/dist/editor.js mandatory)
     <script src="/_content/EditorJs/lib/editorjs/table/dist/table.js" asp-append-version="true"></script>
     <script src="/_content/EditorJs/lib/editorjs/warning/dist/bundle.js" asp-append-version="true"></script>
 ```
+
+
+### Future development (forecasting breaking changes)
+
+When passing in the configuraton options, the key for the options wll be the tool/plugin name, for example `window.Header` will be just `Header`, and use ths terms to check the browser DOM and return that object.
+
+```js
+// untested
+let class_fn = window["Header"];
+```
+
+The term `Header` will then go through a process of camel casing (header) in order to identiy the tool options by it's key provded by the developer or fall back to defaults if not present.
+
+A better example of camel casing, would be `LinkTool` to `linkTool`
+
+By allow the tools/plugin to be loaded in this manner, it means any name/class function and options can be loaded and so will allow for custom tooling/plugins.
+
+Be aware that it is uncertain how this will affect the current configurations and may cause breaking changes. If is possible that:
+
+```json
+{ "header": null, "linkTool": null }
+```
+
+Will then become:
+
+```json
+{ "Header": null, "LinkTool": null }
+```
+
+And camel casing may no longer be a requirement and thus, camel casing should just be ignored at that point in order to handle the configuration injection.

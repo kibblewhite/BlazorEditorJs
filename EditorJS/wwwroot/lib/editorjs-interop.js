@@ -19,8 +19,8 @@
 
     },
 
-    _merge_tool_options(class_fn, default_optons, tool_options) {
-        tool_options = Object.assign(default_optons, tool_options);
+    _merge_tool_options(class_fn, default_options, tool_options) {
+        tool_options = Object.assign(default_options, tool_options);
         tool_options.class = class_fn;
         return tool_options;
     },
