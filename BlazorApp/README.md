@@ -59,7 +59,7 @@ A better example of camel casing, would be `LinkTool` to `linkTool`
 
 By allowing the tools/plugin to be loaded in this manner, it means any name/class function and options can be loaded and so will allow for custom tooling/plugins.
 
-Be aware that it is uncertain how this will affect the current configurations and may cause breaking changes. In ths change, it is possible that:
+Be aware that it is uncertain how this will affect the current configurations and may cause breaking changes. In this change, it is possible that:
 
 ```json
 { "header": null, "linkTool": null }
