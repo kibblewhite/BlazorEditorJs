@@ -72,3 +72,57 @@ Will then become:
 ```
 
 And camel casing may no longer be a requirement and thus, camel casing should just be ignored in order to handle the configuration injection.
+
+
+More notes:
+
+```json
+{
+    "LinkTool": {
+        "LoadActions": {
+            "OverrideOptionDefaults": "LinkTool",       // This can just be null or undefined, if you want to use the provided options below. Otherwise this value wll override the options by looking in the browser's DOM for that existing value.
+            "OptionsNamingScheme": "CamelCase",         // PascalCase and SnakeCase // this will convert the class name, the root name identifier here is "LinkTool", and convert this in the string name that is used as the key for the final configuration options.
+            "OverrideOptionsKey": "linkTools"           // When not null this will override the `OptionsNamingScheme` and the value coming in from the root name identifier, and use this exactly hhow it is defined here.
+        },
+        "options": {
+            // ... options
+        }
+    }
+}
+```
+
+With the above config, the output might look a litle like this:
+```json
+{
+    "linkTools": {
+        Class: LinkTool
+    }
+}
+```
+
+
+
+```json
+{
+    "List": {
+        "LoadActions": {
+            "OptionsNamingScheme": "CamelCase"
+        },
+        "options": {
+            inlineToolbar: true,
+            shortcut: 'CMD+SHIFT+L'
+        }
+    }
+}
+```
+
+With the above config, the output might look a litle like this:
+```json
+{
+    "list": {
+        Class: List,
+        inlineToolbar: true,
+        shortcut: 'CMD+SHIFT+L'
+    }
+}
+```
