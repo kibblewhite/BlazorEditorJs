@@ -1,0 +1,21 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+	<!-- Concatenate scripts on Build. -->
+	<Target Name="CombineJS" BeforeTargets="Build">
+
+		<!-- List of all the files to concatenate. -->
+		<CreateItem Include="wwwroot/lib/EditorJs/*/dist/*.min.js">
+			<Output TaskParameter="Include" ItemName="JsFilesToCombine" />
+		</CreateItem>
+
+		<!-- Read the contents of the files (preserving tabs/spaces). -->
+		<ReadLinesFromFile File="%(JsFilesToCombine.FullPath)">
+			<Output TaskParameter="Lines" ItemName="JsLines" />
+		</ReadLinesFromFile>
+
+		<!-- Write the result to a single file. -->
+		<WriteLinesToFile File="wwwroot/lib/editorjs-bundle.js" Lines="@(JsLines)" Overwrite="true" Encoding="UTF-8" />
+
+	</Target>
+
+</Project>
