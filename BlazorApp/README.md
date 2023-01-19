@@ -17,8 +17,8 @@ string editor_tools_json = """
 EditorTools = JsonObject.Parse(editor_tools_json)?.AsObject() ?? new();
 ```
 
-For more advanced confgurations, look into the sample code.
-- In the `Index.razor.cs` file, there is a example using the `embed` tool/plugin demostrating who to pass configurations into the editorjs library.
+For more advanced configurations, look into the sample code.
+- The `Index.razor.cs` file contains an example using the `embed` tool/plugin demostrating how to pass/inject configurations into the editorjs library.
 
 
 To load all the available plugins (bundled)
@@ -46,20 +46,20 @@ Or load only the plugins that is required (editorjs/dist/editor.js mandatory)
 
 ### Future development (forecasting breaking changes)
 
-When passing in the configuraton options, the key for the options wll be the tool/plugin name, for example `window.Header` will be just `Header`, and use ths terms to check the browser DOM and return that object.
+When passing in the configuraton options, the key for the options wll be the tool/plugin name, for example `window.Header` will be just `Header`, and this term is used to check in the browser's DOM to return that object.
 
 ```js
 // untested
 let class_fn = window["Header"];
 ```
 
-The term `Header` will then go through a process of camel casing (header) in order to identiy the tool options by it's key provded by the developer or fall back to defaults if not present.
+The term `Header` will then go through a process of camel casing (to become `header`) in order to identity the tool options by it's key provided by the developer or fall back to defaults if not present.
 
 A better example of camel casing, would be `LinkTool` to `linkTool`
 
-By allow the tools/plugin to be loaded in this manner, it means any name/class function and options can be loaded and so will allow for custom tooling/plugins.
+By allowing the tools/plugin to be loaded in this manner, it means any name/class function and options can be loaded and so will allow for custom tooling/plugins.
 
-Be aware that it is uncertain how this will affect the current configurations and may cause breaking changes. If is possible that:
+Be aware that it is uncertain how this will affect the current configurations and may cause breaking changes. In ths change, it is possible that:
 
 ```json
 { "header": null, "linkTool": null }
@@ -71,4 +71,4 @@ Will then become:
 { "Header": null, "LinkTool": null }
 ```
 
-And camel casing may no longer be a requirement and thus, camel casing should just be ignored at that point in order to handle the configuration injection.
+And camel casing may no longer be a requirement and thus, camel casing should just be ignored in order to handle the configuration injection.
