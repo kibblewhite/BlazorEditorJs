@@ -5,9 +5,28 @@
 		<LangVersion>11.0</LangVersion>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
-		<Version>1.0.1.4</Version>
+		<Version>1.0.1.5</Version>
 		<AddRazorSupportForMvc>true</AddRazorSupportForMvc>
+		<AssemblyName>EditorJS</AssemblyName>
+		<RootNamespace>EditorJS</RootNamespace>
+		<Authors>kibblewhite &lt;kibblewhite@live.com&gt;</Authors>
+		<Description>A Blazor component implementation for EditorJS.io a block styled editor.</Description>
+		<PackageTags>editorjs;blazor;blazor-editorjs;editorjs-blazor</PackageTags>
+		<PackageIcon>editorjs.png</PackageIcon>
+		<ApplicationIcon>editorjs.ico</ApplicationIcon>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageLicenseFile>LICENSE</PackageLicenseFile>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<TreatWarningsAsErrors>True</TreatWarningsAsErrors>
 	</PropertyGroup>
+
+	<ItemGroup>
+		<None Include="LICENSE" Pack="true" PackagePath="" />
+		<None Include="editorjs.ico" Pack="true" PackagePath="" />
+		<None Include="editorjs.png" Pack="true" PackagePath="" />
+		<None Include="README.md" Pack="true" PackagePath="" />
+		<Content Remove="wwwroot\lib\editorjs\**\.*" />
+	</ItemGroup>
 
 	<Import Project="libman.targets" />
 
