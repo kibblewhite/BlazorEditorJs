@@ -53,46 +53,22 @@ Or load only the plugins that is required (`editorjs/dist/editor.js` mandatory)
     "LinkTool": {
         "LoadActions": {
 
-	        // This can just be null or undefined, if you want to use the
-	        // provider options below. Otherwise this value will override
-	        // the options by looking in the browser's DOM for that existing value.
+            // The default class function to be loaded from the provider.
+            // This can be null or undefined to use the default options.
+            // Otherwise, this value will override the options by looking 
+            // in the browser's DOM for an existing value.
             "LoadProviderClassFunctionDefault": "LinkTool",
 
-			// PascalCase and SnakeCase
-			// This will convert the class name, the root name identifier here
-			// is "LinkTool", and convert this in the string name that is used
-			// as the key for the final configuration options.
+            // The naming scheme for the options.
+            // This will convert the class name, using the root name identifier
+            // "LinkTool", and convert it to a string that is used as the key
+            // for the final configuration options.
+            // Accepted values: "CamelCase", "PascalCase", "SnakeCase"
             "OptionsNamingScheme": "CamelCase",
 
-			// When not null this will override the `OptionsNamingScheme`
-			// and the value coming in from the root name identifier
-			// and use this exactly how it is defined here.
-            "OverrideOptionsKey": "linkTools"               
-        },
-        "options": null
-    }
-}
-Copy code
-{
-    "LinkTool": {
-        "LoadActions": {
-
-	        // The default class function to be loaded from the provider.
-	        // This can be null or undefined to use the default options.
-	        // Otherwise, this value will override the options by looking 
-	        // in the browser's DOM for an existing value.
-            "LoadProviderClassFunctionDefault": "LinkTool",
-
-			// The naming scheme for the options.
-			// This will convert the class name, using the root name identifier
-			// "LinkTool", and convert it to a string that is used as the key
-			// for the final configuration options.
-			// Accepted values: "CamelCase", "PascalCase", "SnakeCase"
-            "OptionsNamingScheme": "CamelCase",
-
-			// When not null, this will override the `OptionsNamingScheme`
-			// and the value coming in from the root name identifier
-			// and use this exactly as it is defined here.
+            // When not null, this will override the `OptionsNamingScheme`
+            // and the value coming in from the root name identifier
+            // and use this exactly as it is defined here.
             "OverrideOptionsKey": "linkTools"               
         },
         "options": null
