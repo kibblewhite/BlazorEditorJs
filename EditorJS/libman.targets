@@ -1,7 +1,7 @@
 ﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
 	<!-- Concatenate scripts on Build and creates the 'wwwroot/lib/editorjs-bundle.js' file -->
-	<Target Name="CombineJS" BeforeTargets="Build">
+	<Target Name="BuildCombinedJS" BeforeTargets="Build">
 
 		<!-- List of all the files to concatenate. -->
 		<CreateItem Include="wwwroot/lib/EditorJs/*/dist/*.min.js">
@@ -18,4 +18,9 @@
 
 	</Target>
 
+	<Target Name="RemoveCombinedJS" BeforeTargets="Clean">
+		<Message Text="Deleting wwwroot/lib/editorjs-bundle.js"/>
+		<Delete Files="wwwroot/lib/editorjs-bundle.js" />
+	</Target>
+	
 </Project>
