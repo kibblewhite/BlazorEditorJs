@@ -23,7 +23,7 @@ public partial class Index
         EditorTools = JsonObject.Parse("{}")?.AsObject() ?? new();
 
         string editor_tools = """
-            { "header": null, "warning": null, "marker": null, "linkTool": null, "nestedList": null, "quote": null, "embed": { "config": { "services" : { "youtube": true } } } }
+            {"LinkTool":{"LoadActions":{"LoadProviderClassFunctionDefault":"LinkTool","OptionsNamingScheme":"CamelCase","OverrideOptionsKey":"linkTools"},"options":null},"List":{"LoadActions":{"OptionsNamingScheme":"CamelCase"},"options":{"inlineToolbar":true,"shortcut":"CMD+SHIFT+L"}},"Header":{"LoadActions":{"OptionsNamingScheme":"CamelCase"}},"Warning":{"LoadActions":{"OptionsNamingScheme":"CamelCase"}},"Marker":{"LoadActions":{"OptionsNamingScheme":"CamelCase"}},"NestedList":{"LoadActions":{"OptionsNamingScheme":"CamelCase","OverrideOptionsKey":"list"}},"Quote":{"LoadActions":{"OptionsNamingScheme":"CamelCase"}},"Embed":{"LoadActions":{"OptionsNamingScheme":"CamelCase"},"options":{"config":{"services":{"instagram":true}}}}}
         """;
         EditorTools = JsonObject.Parse(editor_tools)?.AsObject() ?? new();
 
@@ -31,7 +31,7 @@ public partial class Index
         // This is because edtorjs has certain dependencies caused by the `header.inlineToolbar' array values. EditorJS should have the appropriate tools/plugins enabled.
         // This error will also occur because of unsupported blocks in the editor and the whole editor document may need to be reset.
         string editor_tools_02 = """
-            { "header": null, "linkTool": null, "nestedList": null, "marker": null, "warning": null, "checklist": null, "code": null, "delimiter": null, "embed": null, "simpleImage": null, "inlineCode": null, "quote": null, "table": null }
+            {"Header":{"LoadActions":{"OptionsNamingScheme":"CamelCase"}},"LinkTool":{"LoadActions":{"OptionsNamingScheme":"CamelCase"}},"NestedList":{"LoadActions":{"OptionsNamingScheme":"CamelCase","OverrideOptionsKey":"list"}},"Marker":{"LoadActions":{"OptionsNamingScheme":"CamelCase"}},"Warning":{"LoadActions":{"OptionsNamingScheme":"CamelCase"}},"Checklist":{"LoadActions":{"OptionsNamingScheme":"CamelCase"}},"CodeTool":{"LoadActions":{"OptionsNamingScheme":"CamelCase","OverrideOptionsKey":"code"}},"Delimiter":{"LoadActions":{"OptionsNamingScheme":"CamelCase"}},"SimpleImage":{"LoadActions":{"OptionsNamingScheme":"CamelCase","OverrideOptionsKey":"image"}},"Embed":{"LoadActions":{"OptionsNamingScheme":"CamelCase"},"options":{"config":{"services":{"instagram":true,"youtube":true,"vimeo":true,"imgur":true,"twitter":true,"facebook":true}}}},"InlineCode":{"LoadActions":{"OptionsNamingScheme":"CamelCase"}},"Quote":{"LoadActions":{"OptionsNamingScheme":"CamelCase"}},"Table":{"LoadActions":{"OptionsNamingScheme":"CamelCase"}}}
         """;
         EditorTools02 = JsonObject.Parse(editor_tools_02)?.AsObject() ?? new();
     }

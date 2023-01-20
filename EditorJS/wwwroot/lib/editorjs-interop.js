@@ -1,6 +1,70 @@
 ﻿const editorjs = {
 
     editorjs_elements: {},
+    options_naming_scheme_list: ["CamelCase", "PascalCase", "SnakeCase", "KebabCase"],
+    supported_tools_configuration_options: {
+        Header: {
+            inlineToolbar: ['marker', 'link'],
+                config: {
+                placeholder: 'Header'
+            },
+            shortcut: 'CMD+SHIFT+H'
+        },
+        List: {
+            inlineToolbar: true,
+            shortcut: 'CMD+SHIFT+L'
+        },
+        LinkTool: {
+            class: LinkTool
+        },
+        NestedList: {
+            inlineToolbar: true,
+            config: {
+                defaultStyle: 'unordered'
+            }
+        },
+        Marker: {
+            shortcut: 'CMD+SHIFT+M'
+        },
+        Warning: {
+            class: Warning
+        },
+        CheckList: {
+            inlineToolbar: true
+        },
+        CodeTool: {
+            class: CodeTool
+        },
+        Delimiter: {
+            class: Delimiter
+        },
+        Embed: {
+            inlineToolbar: true,
+            config: {
+                services: {
+                    "youtube": false
+                }
+            }
+        },
+        SimpleImage: {
+            class: SimpleImage
+        },
+        InlineCode: {
+            shortcut: 'CMD+SHIFT+M',
+        },
+        Quote: {
+            inlineToolbar: true,
+            config: {
+                quotePlaceholder: 'Enter a quote',
+                captionPlaceholder: 'Quote\'s author',
+            },
+            shortcut: 'CMD+SHIFT+O'
+        },
+        Table: {
+            inlineToolbar: true,
+            shortcut: 'CMD+ALT+T'
+        }
+    },
 
     // This method handles the selection of multiple editorjs instances in the browser's DOM
     editorjs_element_selector(id, options = {}) {
@@ -19,139 +83,108 @@
 
     },
 
-    _merge_tool_options(class_fn, default_options, tool_options) {
+    _format_string(str, load_actions) {
+
+        const { OptionsNamingScheme, OverrideOptionsKey } = load_actions;
+
+        if (typeof OverrideOptionsKey !== 'undefined') {
+            return OverrideOptionsKey; 
+        }
+
+        // Replace all non-alphanumeric characters with spaces
+        str = str.replace(/[^a-zA-Z0-9]/g, ' ');
+
+        // Split the string into words
+        let words = str.split(' ');
+
+        switch (OptionsNamingScheme) {
+            case "CamelCase":
+                // Ensure that the first letter is lower cased
+                words[0] = words[0].charAt(0).toLowerCase() + words[0].slice(1);
+                // Iterate through the words, capitalizing the first letter of each word and joining them
+                for (let i = 1; i < words.length; i++) {
+                    words[i] = words[i].charAt(0).toUpperCase() + words[i].slice(1);
+                }
+                return words.join('');
+            case "PascalCase":
+                // Iterate through the words, capitalizing the first letter of each word and joining them
+                for (let i = 0; i < words.length; i++) {
+                    words[i] = words[i].charAt(0).toUpperCase() + words[i].slice(1);
+                }
+                return words.join('');
+            case "SnakeCase":
+                return words.join('_').toLowerCase();
+            case "KebabCase":
+                return words.join('-').toLowerCase();
+        }
+
+        throw new Error(`Invalid format provided. Choose one of ["${editorjs.options_naming_scheme_list.join('", "')}"]`);
+
+    },
+
+    // The `_is_plain_property` function is used to check if a given json object is a plain property.
+    // A plain property is defined as one of the following:
+    // - The json object is null
+    // - The json object is undefined
+    // - The json object is an empty object (i.e. it has no properties)
+    _is_plain_property(json) {
+        return json === null || typeof json === 'undefined' || (typeof json === 'object' && Object.keys(json).length === 0);
+    },
+
+    _merge_tool_options(id, key, tool_options, load_actions) {
+
+        let default_options = editorjs.supported_tools_configuration_options[key] ?? {};
         tool_options = Object.assign(default_options, tool_options);
-        tool_options.class = class_fn;
+
+        if (typeof load_actions.LoadProviderClassFunctionDefault !== 'undefined' && typeof window[load_actions.LoadProviderClassFunctionDefault] !== 'undefined') {
+            tool_options.class = window[load_actions.LoadProviderClassFunctionDefault];
+        } else {
+            tool_options.class = window[key];
+        }
+
         return tool_options;
+    },
+
+    // Retrieves options and checks the presences of the `LoadActions.OptionsNamingScheme`
+    _get_validated_load_options(tool_options) {
+
+        // Destructuring assignment to extract LoadActions property
+        const { LoadActions } = tool_options;
+
+        // Check if LoadActions is undefined
+        if (typeof LoadActions === 'undefined') {
+            // Throws an error if LoadActions is not defined with reminder in the error
+            throw new Error('LoadActions should be defined. Example: { "LinkTool":{"LoadActions":{ ... }} }');
+        }
+
+        // Check if LoadActions.OptionsNamingScheme is undefined
+        if (typeof LoadActions.OptionsNamingScheme !== 'string' || editorjs.options_naming_scheme_list.includes(LoadActions.OptionsNamingScheme) != true) {
+            // Throws an error if LoadActions.OptionsNamingScheme is not defined, chances are high that the developer has not read the documentation and has only reacted to the first error message
+            throw new Error('LoadActions.OptionsNamingScheme is not defined correctly. Please read any available documentation first before using this component.');
+        }
+
+        // Return tool_options.options if no other conditions are met
+        return tool_options.options;
+
     },
 
     init(id, jsob, tool_options, instance, callback) {
 
         let tools = {};
 
-        if (typeof window.Header !== 'undefined' && typeof tool_options.header !== 'undefined') {
-            tools = Object.assign(tools, {
-                'header': editorjs._merge_tool_options(Header, {
-                    inlineToolbar: ['marker', 'link'],
-                    config: {
-                        placeholder: 'Header'
-                    },
-                    shortcut: 'CMD+SHIFT+H'
-                }, tool_options.header)
-            });
-        }
+        for (let key of Object.keys(tool_options)) {
 
-        if (typeof window.LinkTool !== 'undefined' && typeof tool_options.linkTool !== 'undefined') {
-            tools = Object.assign(tools, {
-                'linkTool': editorjs._merge_tool_options(LinkTool, LinkTool, tool_options.linkTool)
-            });
-        }
+            if (typeof key !== 'string' || typeof window[key] === 'undefined') {
+                continue;
+            }
 
-        if (typeof window.List !== 'undefined' && typeof tool_options.list !== 'undefined') {
-            tools = Object.assign(tools, {
-                'list': editorjs._merge_tool_options(List, {
-                    inlineToolbar: true,
-                    shortcut: 'CMD+SHIFT+L'
-                }, tool_options.list)
-            });
-        }
+            let options = editorjs._get_validated_load_options(tool_options[key]);
+            let tool_key = editorjs._format_string(key, tool_options[key].LoadActions);
+            let output = {
+                [tool_key]: editorjs._merge_tool_options(id, key, options, tool_options[key].LoadActions)
+            };
 
-        if (typeof window.NestedList !== 'undefined' && typeof tool_options.nestedList !== 'undefined') {
-            tools = Object.assign(tools, {
-                'list': editorjs._merge_tool_options(NestedList, {
-                    inlineToolbar: true,
-                    config: {
-                        defaultStyle: 'unordered'
-                    }
-                }, tool_options.list) 
-            });
-        }
-
-        if (typeof window.Marker !== 'undefined' && typeof tool_options.marker !== 'undefined') {
-            tools = Object.assign(tools, {
-                'marker': editorjs._merge_tool_options(Marker, {
-                    shortcut: 'CMD+SHIFT+M'
-                }, tool_options.marker)
-            });
-        }
-
-        if (typeof window.Warning !== 'undefined' && typeof tool_options.warning !== 'undefined') {
-            tools = Object.assign(tools, {
-                'warning': editorjs._merge_tool_options(Warning, Warning, tool_options.warning)
-            });
-        }
-
-        if (typeof window.Checklist !== 'undefined' && typeof tool_options.checklist !== 'undefined') {
-            tools = Object.assign(tools, {
-                'checklist': editorjs._merge_tool_options(Checklist, {
-                    inlineToolbar: true
-                }, tool_options.checklist)
-            });
-        }
-
-        if (typeof window.CodeTool !== 'undefined' && typeof tool_options.code !== 'undefined') {
-            tools = Object.assign(tools, {
-                'code': editorjs._merge_tool_options(CodeTool, CodeTool, tool_options.checklist)
-            });
-        }
-
-        if (typeof window.Delimiter !== 'undefined' && typeof tool_options.delimiter !== 'undefined') {
-            tools = Object.assign(tools, {
-                'delimiter': editorjs._merge_tool_options(Delimiter, Delimiter, tool_options.delimiter)
-            });
-        }
-
-        if (typeof window.Embed !== 'undefined' && typeof tool_options.embed !== 'undefined') {
-            tools = Object.assign(tools, {
-                'embed': editorjs._merge_tool_options(Embed, {
-                    config: {
-                        services: {
-                            youtube: true,
-                            vimeo: true,
-                            imgur: true,
-                            twitter: true,
-                            facebook: true,
-                            instagram : true
-                        }
-                    }
-                }, tool_options.embed)
-            });
-        }
-
-        if (typeof window.SimpleImage !== 'undefined' && typeof tool_options.simpleImage !== 'undefined') {
-            tools = Object.assign(tools, {
-                'image': editorjs._merge_tool_options(SimpleImage, SimpleImage, tool_options.simpleImage)
-            });
-        }
-
-        if (typeof window.InlineCode !== 'undefined' && typeof tool_options.inlineCode !== 'undefined') {
-            tools = Object.assign(tools, {
-                'inlineCode': editorjs._merge_tool_options(InlineCode, {
-                    shortcut: 'CMD+SHIFT+M',
-                }, tool_options.inlineCode) 
-            });
-        }
-
-        if (typeof window.Quote !== 'undefined' && typeof tool_options.quote !== 'undefined') {
-            tools = Object.assign(tools, {
-                'quote': editorjs._merge_tool_options(Quote, {
-                    inlineToolbar: true,
-                    config: {
-                        quotePlaceholder: 'Enter a quote',
-                        captionPlaceholder: 'Quote\'s author',
-                    },
-                    shortcut: 'CMD+SHIFT+O'
-                }, tool_options.quote)
-            });
-        }
-
-        if (typeof window.Table !== 'undefined' && typeof tool_options.table !== 'undefined') {
-            tools = Object.assign(tools, {
-                'table': editorjs._merge_tool_options(Table, {
-                    inlineToolbar: true,
-                    shortcut: 'CMD+ALT+T'
-                }, tool_options.table)
-            });
+            tools = Object.assign(tools, output);
         }
 
         let options = {

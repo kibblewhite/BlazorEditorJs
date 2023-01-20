@@ -12,7 +12,7 @@ This is a basic blazor app created in Visual Studio 2022.
 The value `EdtorTools` is a csharp JsonObject containing the following in the code-behind:
 ```csharp
 string editor_tools_json = """
-    { "header": null, "linkTool": null, "nestedList": null, "marker": null, "warning": null, "checklist": null, "code": null, "delimiter": null, "embed": null, "simpleImage": null, "inlineCode": null, "quote": null, "table": null }
+    {"Header":{"LoadActions":{"OptionsNamingScheme":"CamelCase"}},"LinkTool":{"LoadActions":{"OptionsNamingScheme":"CamelCase"}},"NestedList":{"LoadActions":{"OptionsNamingScheme":"CamelCase","OverrideOptionsKey":"list"}},"Marker":{"LoadActions":{"OptionsNamingScheme":"CamelCase"}},"Warning":{"LoadActions":{"OptionsNamingScheme":"CamelCase"}},"Checklist":{"LoadActions":{"OptionsNamingScheme":"CamelCase"}},"CodeTool":{"LoadActions":{"OptionsNamingScheme":"CamelCase","OverrideOptionsKey":"code"}},"Delimiter":{"LoadActions":{"OptionsNamingScheme":"CamelCase"}},"SimpleImage":{"LoadActions":{"OptionsNamingScheme":"CamelCase","OverrideOptionsKey":"image"}},"Embed":{"LoadActions":{"OptionsNamingScheme":"CamelCase"},"options":{"config":{"services":{"instagram":true,"youtube":true,"vimeo":true,"imgur":true,"twitter":true,"facebook":true}}}},"InlineCode":{"LoadActions":{"OptionsNamingScheme":"CamelCase"}},"Quote":{"LoadActions":{"OptionsNamingScheme":"CamelCase"}},"Table":{"LoadActions":{"OptionsNamingScheme":"CamelCase"}}}
 """;
 EditorTools = JsonObject.Parse(editor_tools_json)?.AsObject() ?? new();
 ```
@@ -44,49 +44,18 @@ Or load only the plugins that is required (editorjs/dist/editor.js mandatory)
 ```
 
 
-### Future development (forecasting breaking changes)
+### Supporting tool loading options from component
 
-When passing in the configuraton options, the key for the options wll be the tool/plugin name, for example `window.Header` will be just `Header`, and this term is used to check in the browser's DOM to return that object.
-
-```js
-// untested
-let class_fn = window["Header"];
-```
-
-The term `Header` will then go through a process of camel casing (to become `header`) in order to identity the tool options by it's key provided by the developer or fall back to defaults if not present.
-
-A better example of camel casing, would be `LinkTool` to `linkTool`
-
-By allowing the tools/plugin to be loaded in this manner, it means any name/class function and options can be loaded and so will allow for custom tooling/plugins.
-
-Be aware that it is uncertain how this will affect the current configurations and may cause breaking changes. In this change, it is possible that:
-
-```json
-{ "header": null, "linkTool": null }
-```
-
-Will then become:
-
-```json
-{ "Header": null, "LinkTool": null }
-```
-
-And camel casing may no longer be a requirement and thus, camel casing should just be ignored in order to handle the configuration injection.
-
-
-More notes:
 
 ```json
 {
     "LinkTool": {
         "LoadActions": {
-            "OverrideOptionDefaults": "LinkTool",       // This can just be null or undefined, if you want to use the provided options below. Otherwise this value wll override the options by looking in the browser's DOM for that existing value.
-            "OptionsNamingScheme": "CamelCase",         // PascalCase and SnakeCase // this will convert the class name, the root name identifier here is "LinkTool", and convert this in the string name that is used as the key for the final configuration options.
-            "OverrideOptionsKey": "linkTools"           // When not null this will override the `OptionsNamingScheme` and the value coming in from the root name identifier, and use this exactly hhow it is defined here.
+            "LoadProviderClassFunctionDefault": "LinkTool", // This can just be null or undefined, if you want to use the provider options below. Otherwise this value will override the options by looking in the browser's DOM for that existing value.
+            "OptionsNamingScheme": "CamelCase",             // PascalCase and SnakeCase // this will convert the class name, the root name identifier here is "LinkTool", and convert this in the string name that is used as the key for the final configuration options.
+            "OverrideOptionsKey": "linkTools"               // When not null this will override the `OptionsNamingScheme` and the value coming in from the root name identifier, and use this exactly how it is defined here.
         },
-        "options": {
-            // ... options
-        }
+        "options": null
     }
 }
 ```
@@ -126,3 +95,5 @@ With the above config, the output might look a litle like this:
     }
 }
 ```
+
+To see an examples of this, inspect the `Index.razor.cs` file.
