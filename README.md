@@ -1,8 +1,16 @@
 # BlazorEditorJs
 
-A simple editorjs implementation as a blazor component. 
+A simple editorjs implementation as a blazor component.
+- https://editorjs.io/
 
 All I ask for is a github star if you use this, thank you.
+
+[![GitHub stars](https://img.shields.io/github/stars/kibblewhite/BlazorEditorJs.svg?style=social&label=Star)](https://github.com/kibblewhite/BlazorEditorJs)
+
+<a href="https://github.com/kibblewhite/BlazorEditorJs">
+  <img src="https://gh-star-button.vercel.app/api/star/kibblewhite/BlazorEditorJs" alt="Star BlazorEditorJs on GitHub" />
+</a>
+
 
 ---
 
