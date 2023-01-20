@@ -25,4 +25,4 @@ If you feel like giving support, please send some towards codex editorjs team at
 
 ---
 
-Think there is a missing offical plugin that should be included, let me know and I''ll included it into the project.
+Think there is a missing offical plugin that should be included, let me know and I'll included it into the project.
