@@ -26,4 +26,4 @@ If you feel like giving support, please send some towards codex editorjs team at
 
 ---
 
-Think there is a missing offical plugin that should be included, something out of date, let me know and I'll do my best for it to be included into the project.
+Think there is a missing offical plugin that should be included and is present in the `jsdelivr` CDN, or some information that is out of date, let me know and I'll do my best for it to be included into the project.
