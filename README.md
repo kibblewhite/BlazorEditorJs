@@ -22,3 +22,7 @@ To see it's usage, please visit the `BlazorApp` project and inspect the files:
 
 If you feel like giving support, please send some towards codex editorjs team at:
 - https://opencollective.com/editorjs
+
+---
+
+Think there is a missing offical plugin that should be included, let me know and I''ll included it into the project.

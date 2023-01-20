@@ -22,12 +22,14 @@ string editor_tools_json = """
 EditorTools = JsonObject.Parse(editor_tools_json)?.AsObject() ?? new();
 ```
 
+There are more details below on the `LoadAction` property object and what the associated properties mean.
+
 To load all the available plugins (bundled)
 ```html
     <script src="/_content/EditorJs/lib/editorjs-bundle.js" asp-append-version="true"></script>
 ```
 
-Or load only the plugins that is required (`editorjs/dist/editor.js` mandatory)
+Or load only the plugins that are required (`editorjs/dist/editor.js` mandatory)
 ```html
     <script src="/_content/EditorJs/lib/editorjs/editorjs/dist/editor.js" asp-append-version="true"></script>
     <script src="/_content/EditorJs/lib/editorjs/checklist/dist/bundle.js" asp-append-version="true"></script>
@@ -116,3 +118,7 @@ With the above config, the output might look a litle like this:
 ```
 More details on the output configurations for editojs `list` can be found here:
 - https://github.com/editor-js/list
+
+---
+
+The approach described above, which utilises these configurations, allows the Blazor component to load almost any plugin, including custom EditorJS plugins.
