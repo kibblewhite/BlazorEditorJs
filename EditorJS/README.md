@@ -129,8 +129,8 @@ The approach described above, which utilises these configurations, allows the Bl
 
 1. Install the necessary NuGet package.
 2. Ensure that the relevant JavaScript files have been included in the layout.
-  - <script src="/_content/EditorJs/lib/editorjs-bundle.js" asp-append-version="true"></script>
+  - `<script src="/_content/EditorJs/lib/editorjs-bundle.js" asp-append-version="true"></script>`
 3. Add the EditorValue and EditorTools JsonObject and create a callback method to handle changes to the editor.
-  - public Task OnEditorValueChanged(JsonObject value) => Task.FromResult(EditorValue = value);
+  - `public Task OnEditorValueChanged(JsonObject value) => Task.FromResult(EditorValue = value);`
 4. Include the Editor markup in the pages where you want it to appear.
-  - <Editor Id="editorjs-blazor" Name="editorjs-blazor" Value="EditorValue" ValueChanged="OnEditorValueChanged" Tools="EditorTools" />
+  - `<Editor Id="editorjs-blazor" Name="editorjs-blazor" Value="EditorValue" ValueChanged="OnEditorValueChanged" Tools="EditorTools" />`
