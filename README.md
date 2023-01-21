@@ -26,7 +26,13 @@ If you feel like giving support, please send some towards codex editorjs team at
 
 ---
 
-Think there is a missing offical plugin that should be included and is present in the `jsdelivr` CDN, or some information that is out of date, let me know and I'll do my best for it to be included into the project.
+Think there is a missing offical tool/plugin that should be included. The tool should meet the following requirements:
+- It is present in the `jsdelivr` CDN and can be included via the libman tool (Microsoft.Web.LibraryManager.Build)
+- Their configuration schema should be correct, sample. `tools: { plugin: { class: class_fn, ... } }`
+
+Let me know and I'll do my best for it to be included into the project.
+
+Did you know that you can dynamically load plugin-tools from external CDN and this project supports it? Check out the [edtorjs-toggle-block](https://github.com/kommitters/editorjs-toggle-block) example being loaded in externally in the `BlazorWasmApp` project.
 
 `MinimumVisualStudioVersion = 17.4.33213.308`
 - https://learn.microsoft.com/en-us/visualstudio/install/visual-studio-build-numbers-and-release-dates
@@ -34,7 +40,5 @@ Think there is a missing offical plugin that should be included and is present i
 Notes:
 
 ```bash
-dotnet build -c Release
-dotnet pack EditorJS/EditorJS.csproj -c Release
-dotnet publish EditorJS/EditorJS.csproj /p:PublishProfile=EditorJS/Properties/PublishProfiles/EditorJS.pubxml -c Release
+dotnet nuget push EditorJS/bin/Release/net7.0/publish/EditorJS.*.nupkg -k <api-key /> -s https://api.nuget.org/v3/index.json
 ```

@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "http": {
+    "BlazorWasmApp": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,

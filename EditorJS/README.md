@@ -125,12 +125,12 @@ More details on the output configurations for editojs `list` can be found here:
 The approach described above, which utilises these configurations, allows the Blazor component to load almost any plugin, including custom EditorJS plugins.
 
 
-### Setup Brief
+### Setup/Installation Brief
 
 1. Install the necessary NuGet package.
 2. Ensure that the relevant JavaScript files have been included in the layout.
   - `<script src="/_content/EditorJs/lib/editorjs-bundle.js" asp-append-version="true"></script>`
-3. Add the EditorValue and EditorTools JsonObject and create a callback method to handle changes to the editor.
+3. Add the EditorValue and EditorTools JsonObject and create a callback method to handle changes coming from the editor.
   - `public Task OnEditorValueChanged(JsonObject value) => Task.FromResult(EditorValue = value);`
 4. Include the Editor markup in the pages where you want it to appear.
   - `<Editor Id="editorjs-blazor" Name="editorjs-blazor" Value="EditorValue" ValueChanged="OnEditorValueChanged" Tools="EditorTools" />`
