@@ -30,3 +30,11 @@ Think there is a missing offical plugin that should be included and is present i
 
 `MinimumVisualStudioVersion = 17.4.33213.308`
 - https://learn.microsoft.com/en-us/visualstudio/install/visual-studio-build-numbers-and-release-dates
+
+Notes:
+
+```bash
+dotnet build -c Release
+dotnet pack EditorJS/EditorJS.csproj -c Release
+dotnet publish EditorJS/EditorJS.csproj /p:PublishProfile=EditorJS/Properties/PublishProfiles/EditorJS.pubxml -c Release
+```
