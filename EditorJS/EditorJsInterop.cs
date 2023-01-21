@@ -8,7 +8,7 @@ internal class EditorJsInterop : IAsyncDisposable
     private readonly IJSRuntime _js_runtime;
     private readonly JsonObject? _jsob;
     private readonly string _id;
-    private readonly JsonObject _editorjs_tools;
+    private readonly JsonObject _tools;
 
     public EditorJsInterop(string id, JsonObject? jsob, JsonObject tools, IJSRuntime js_runtime, Func<JsonObject, Task> on_change)
     {
@@ -23,7 +23,7 @@ internal class EditorJsInterop : IAsyncDisposable
                      "./_content/EditorJs/lib/editorjs-interop.js").AsTask());
 
         _update_delegate = on_change;
-        _editorjs_tools = tools;
+        _tools = tools;
     }
 
     public async ValueTask DisposeAsync()
@@ -37,7 +37,7 @@ internal class EditorJsInterop : IAsyncDisposable
     {
         if (_module_task is null) { return; }
         IJSObjectReference module = await _module_task.Value;
-        await module.InvokeVoidAsync("editorjs.init", _id, _jsob, _editorjs_tools, DotNetObjectReference.Create(this), nameof(OnChangeAsync));
+        await module.InvokeVoidAsync("editorjs.init", _id, _jsob, _tools, DotNetObjectReference.Create(this), nameof(OnChangeAsync));
     }
 
     public async Task RenderAsync(JsonObject jsob)
