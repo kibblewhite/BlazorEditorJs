@@ -5,7 +5,7 @@
 		<LangVersion>11.0</LangVersion>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
-		<Version>1.0.1.7</Version>
+		<Version>1.0.1.9</Version>
 		<AddRazorSupportForMvc>true</AddRazorSupportForMvc>
 		<AssemblyName>EditorJS</AssemblyName>
 		<RootNamespace>EditorJS</RootNamespace>
@@ -16,8 +16,8 @@
 		<ApplicationIcon>editorjs.ico</ApplicationIcon>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageLicenseFile>LICENSE</PackageLicenseFile>
-		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-		<TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 	</PropertyGroup>
 
 	<ItemGroup>
