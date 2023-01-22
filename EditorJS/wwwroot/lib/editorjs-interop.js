@@ -5,7 +5,7 @@
     supported_tools_configuration_options: {
         Header: {
             inlineToolbar: ['marker', 'link'],
-                config: {
+            config: {
                 placeholder: 'Header'
             },
             shortcut: 'CMD+SHIFT+H'

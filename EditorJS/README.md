@@ -117,7 +117,7 @@ With the above config, the output might look a litle like this:
     }
 }
 ```
-More details on the output configurations for editojs `list` can be found here:
+More details on the output configurations for editorjs `list` can be found here:
 - https://github.com/editor-js/list
 
 ---
