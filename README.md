@@ -39,7 +39,9 @@ Did you know that you can dynamically load plugin-tools from external CDN and th
 
 ## Next steps...
 
-I plan to write some unit tests for this, and also start learning how to use Microsoft's [playwright](https://playwright.dev/) UI unit testing tool.
+- UI Unit Testing using Microsoft's [playwright](https://playwright.dev/)
+- Better exception handling, either: catch and log / bubble up to the application layer / handles error by passing exception message up to calling method
+- Use of ValueObjects to handle results and data internally (TBC)
 
 Notes:
 
