@@ -37,6 +37,10 @@ Did you know that you can dynamically load plugin-tools from external CDN and th
 `MinimumVisualStudioVersion = 17.4.33213.308`
 - https://learn.microsoft.com/en-us/visualstudio/install/visual-studio-build-numbers-and-release-dates
 
+## Next steps...
+
+I plan to write some unit tests for this, and also start learning how to use Microsoft's [playwright](https://playwright.dev/) UI unit testing tool.
+
 Notes:
 
 ```bash
