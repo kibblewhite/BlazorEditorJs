@@ -26,18 +26,29 @@
 		<None Include="editorjs.ico" Pack="true" PackagePath="" />
 		<None Include="editorjs.png" Pack="true" PackagePath="" />
 		<None Include="README.md" Pack="true" PackagePath="" />
+		<None Include="wwwroot\lib\editorjs\editorjs\example\tools\image\dev\.tmp\.gitignore" />
+		<None Include="wwwroot\lib\editorjs\table\.eslintignore" />
+		<None Include="wwwroot\lib\editorjs\table\.github\workflows\npm-publish.yml" />
 		<Content Remove="wwwroot\lib\editorjs\**\.*" />
 	</ItemGroup>
 
 	<Import Project="libman.targets" />
 
 	<ItemGroup>
+	  <Content Include="wwwroot\lib\editorjs\editorjs\.vscode\settings.json" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<SupportedPlatform Include="browser" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="7.0.2" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="7.0.5" />
 		<PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="2.1.175" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="wwwroot\lib\editorjs\editorjs\types\events\" />
 	</ItemGroup>
 
 </Project>

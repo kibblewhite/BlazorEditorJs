@@ -3,7 +3,7 @@
   "defaultProvider": "jsdelivr",
   "libraries": [
     {
-      "library": "@editorjs/editorjs@2.26.4",
+      "library": "@editorjs/editorjs@2.26.5",
       "destination": "wwwroot/lib/editorjs/editorjs/"
     },
     {
@@ -75,7 +75,7 @@
       "destination": "wwwroot/lib/editorjs/simple-image/"
     },
     {
-      "library": "@editorjs/table@2.2.0",
+      "library": "@editorjs/table@2.2.1",
       "destination": "wwwroot/lib/editorjs/table/"
     },
     {
