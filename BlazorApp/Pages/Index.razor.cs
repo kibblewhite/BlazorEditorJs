@@ -46,6 +46,7 @@ public partial class Index
     public async Task CopyValueAsync()
     {
         if (editor_02 is null || EditorValue is null) { return; }
+
         await editor_02.RenderAsync(EditorValue);
     }
 }

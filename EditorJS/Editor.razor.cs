@@ -29,6 +29,7 @@ public partial class Editor
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender is false) { return; }
+
         ArgumentNullException.ThrowIfNull(_editor_js_interop);
         await _editor_js_interop.InitAsync();
     }
@@ -46,6 +47,7 @@ public partial class Editor
     protected async Task OnContentChangedRequestAsync(JsonObject jsob)
     {
         if (EqualityComparer<JsonObject>.Default.Equals(Value, jsob) is true) { return; }
+
         await ValueChanged.InvokeAsync(jsob);
         Value = jsob;
     }
@@ -60,6 +62,7 @@ public partial class Editor
     {
         ArgumentNullException.ThrowIfNull(_editor_js_interop);
         if (EqualityComparer<JsonObject>.Default.Equals(Value, jsob) is true) { return; }
+
         await ValueChanged.InvokeAsync(jsob);
         await _editor_js_interop.RenderAsync(jsob);
         Value = jsob;

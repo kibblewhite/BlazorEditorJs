@@ -354,4 +354,4 @@ MigrationBackup/
 /BlazorApp/wwwroot/lib
 /EditorJS/wwwroot/lib
 !/EditorJS/wwwroot/lib/editorjs-interop.js
-nuget-publish-command.md
+/Solution Items/nuget-publish-command.md

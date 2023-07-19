@@ -41,7 +41,7 @@ Did you know that you can dynamically load plugin-tools from external CDN and th
 
 - UI Unit Testing using Microsoft's [playwright](https://playwright.dev/)
 - Better exception handling, either: catch and log / bubble up to the application layer / handles error by passing exception message up to calling method
-- Use of ValueObjects to handle results and data internally (TBC)
+- Use of Monads to handle results and data internally (TBC)
 
 Notes:
 
