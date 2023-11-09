@@ -16,4 +16,6 @@ public class ErrorModel : PageModel
     public ErrorModel(ILogger<ErrorModel> logger) => _logger = logger;
 
     public void OnGet() => RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier;
+
+    protected void Log(string message) => _logger.LogError("Error: {message}", message);
 }

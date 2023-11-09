@@ -1,24 +1,30 @@
 {
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:40419",
+      "sslPort": 0
+    }
+  },
   "profiles": {
-    "BlazorWasmApp": {
+    "http": {
       "commandName": "Project",
+      "dotnetRunMessages": true,
       "launchBrowser": true,
+      "inspectUri": "{wsProtocol}://{url.hostname}:{url.port}/_framework/debug/ws-proxy?browser={browserInspectUri}",
+      "applicationUrl": "http://localhost:5131",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      },
-      "dotnetRunMessages": true,
-      "inspectUri": "{wsProtocol}://{url.hostname}:{url.port}/_framework/debug/ws-proxy?browser={browserInspectUri}",
-      "applicationUrl": "http://localhost:5205"
+      }
     },
-    "WSL": {
-      "commandName": "WSL2",
+    "IIS Express": {
+      "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "http://localhost:5205",
+      "inspectUri": "{wsProtocol}://{url.hostname}:{url.port}/_framework/debug/ws-proxy?browser={browserInspectUri}",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development",
-        "ASPNETCORE_URLS": "http://localhost:5205"
-      },
-      "distributionName": ""
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
     }
   }
 }

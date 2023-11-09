@@ -47,6 +47,7 @@ public partial class Index
     {
         if (editor_02 is null || EditorValue is null) { return; }
 
+        // todo (2023-10-17|kibble): Block comparison between the two editor values because maybe not all blocks are supported in the target editor.
         await editor_02.RenderAsync(EditorValue);
     }
 }
