@@ -32,6 +32,10 @@
 	<Import Project="libman.targets" />
 
 	<ItemGroup>
+		<Content Remove="libman.json" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<SupportedPlatform Include="browser" />
 	</ItemGroup>
 
