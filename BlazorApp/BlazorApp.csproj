@@ -9,18 +9,10 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	</ItemGroup>
-
-	<ItemGroup>
 		<ProjectReference Include="..\EditorJS\EditorJS.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="2.1.175" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<Content Remove="libman.json" />
 		<Compile Update="Resource.Designer.cs">
 			<DesignTime>True</DesignTime>
 			<AutoGen>True</AutoGen>

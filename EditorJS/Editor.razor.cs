@@ -106,6 +106,23 @@ public partial class Editor
         => JsonNode.Parse("{ \"blocks\": [] }")?.AsObject() ?? new();
 
     /// <summary>
+    /// Retrieves the default editor tool configurations as a <see cref="JsonObject"/>.
+    /// </summary>
+    /// <remarks>
+    /// This method is designed to help newer developers get started quickly with default
+    /// configurations for the editor tools. More detailed information about customizing
+    /// tool options can be found in the README.md files. The string
+    /// <see cref="DefaultEditorToolsConfigurationsJSON"/> should be
+    /// maintained based on the contents of the 'libman.json'.
+    /// </remarks>
+    /// <returns>
+    /// A <see cref="JsonObject"/> containing the default configurations for various editor tools.
+    /// If parsing fails or the default configurations are not available, it returns an empty <see cref="JsonObject"/>.
+    /// </returns>
+    public static JsonObject DefaultEditorJsonToolOptions()
+        => ParseEditorJsonToolOptions(_default_editor_tools_configurations_json);
+
+    /// <summary>
     /// Parses a JSON string into a <see cref="JsonObject"/> for use with the <see cref="Editor.Tools"/> parameter.
     /// </summary>
     /// <param name="editor_tools_json">The JSON string containing editor tool options.</param>
@@ -134,22 +151,5 @@ public partial class Editor
     /// </returns>
     private static bool HasRequiredElements(JsonObject json_object) =>
         json_object.ContainsKey("LoadActions") is false || json_object.ContainsKey("OptionsNamingScheme") is false;
-
-    /// <summary>
-    /// Retrieves the default editor tool configurations as a <see cref="JsonObject"/>.
-    /// </summary>
-    /// <remarks>
-    /// This method is designed to help newer developers get started quickly with default
-    /// configurations for the editor tools. More detailed information about customizing
-    /// tool options can be found in the README.md files. The string
-    /// <see cref="DefaultEditorToolsConfigurationsJSON"/> should be
-    /// maintained based on the contents of the 'libman.json'.
-    /// </remarks>
-    /// <returns>
-    /// A <see cref="JsonObject"/> containing the default configurations for various editor tools.
-    /// If parsing fails or the default configurations are not available, it returns an empty <see cref="JsonObject"/>.
-    /// </returns>
-    public static JsonObject DefaultEditorJsonToolOptions()
-        => JsonNode.Parse(_default_editor_tools_configurations_json)?.AsObject() ?? new();
 
 }
