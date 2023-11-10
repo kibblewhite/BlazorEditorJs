@@ -5,7 +5,7 @@
 		<LangVersion>11.0</LangVersion>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
-		<Version>1.0.1.10</Version>
+		<Version>1.0.1.11</Version>
 		<AddRazorSupportForMvc>true</AddRazorSupportForMvc>
 		<AssemblyName>EditorJS</AssemblyName>
 		<RootNamespace>EditorJS</RootNamespace>
@@ -26,17 +26,6 @@
 		<None Include="editorjs.ico" Pack="true" PackagePath="" />
 		<None Include="editorjs.png" Pack="true" PackagePath="" />
 		<None Include="README.md" Pack="true" PackagePath="" />
-		<None Include="wwwroot\lib\editorjs\checklist\.github\workflows\npm-publish.yml" />
-		<None Include="wwwroot\lib\editorjs\editorjs\example\tools\image\dev\.tmp\.gitignore" />
-		<None Include="wwwroot\lib\editorjs\embed\.eslintrc" />
-		<None Include="wwwroot\lib\editorjs\embed\.github\workflows\npm-publish.yml" />
-		<None Include="wwwroot\lib\editorjs\embed\.github\workflows\test.yml" />
-		<None Include="wwwroot\lib\editorjs\image\.github\FUNDING.yml" />
-		<None Include="wwwroot\lib\editorjs\image\.github\workflows\eslint.yml" />
-		<None Include="wwwroot\lib\editorjs\image\.github\workflows\npm-publish.yml" />
-		<None Include="wwwroot\lib\editorjs\image\dev\.tmp\.gitignore" />
-		<None Include="wwwroot\lib\editorjs\table\.eslintignore" />
-		<None Include="wwwroot\lib\editorjs\table\.github\workflows\npm-publish.yml" />
 		<Content Remove="wwwroot\lib\editorjs\**\.*" />
 	</ItemGroup>
 
@@ -49,11 +38,6 @@
 	<ItemGroup>
 		<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="7.0.13" />
 		<PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="2.1.175" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="wwwroot\lib\editorjs\editorjs\types\events\" />
-	  <Folder Include="wwwroot\lib\editorjs\paragraph\.github\" />
 	</ItemGroup>
 
 </Project>
