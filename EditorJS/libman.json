@@ -3,6 +3,10 @@
   "defaultProvider": "jsdelivr",
   "libraries": [
     {
+      "library": "editorjs-text@1.0.8",
+      "destination": "wwwroot/lib/editorjs/text/"
+    },
+    {
       "library": "@editorjs/editorjs@2.27.2",
       "destination": "wwwroot/lib/editorjs/editorjs/"
     },

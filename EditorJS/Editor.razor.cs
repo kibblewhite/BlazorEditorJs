@@ -15,6 +15,7 @@ public partial class Editor
     [Parameter] public string? Style { get; init; }
 
     [Parameter] public required JsonObject Tools { get; init; }
+    [Parameter] public required JsonObject Configurations { get; init; }
 
     /// <summary>
     /// Gets the default JSON configurations for editor tools as a string.
@@ -36,7 +37,8 @@ public partial class Editor
     protected override async Task OnInitializedAsync()
     {
         ArgumentNullException.ThrowIfNull(JSRuntime);
-        _editor_js_interop = new(Id, Value, Tools, JSRuntime, OnContentChangedRequestAsync);
+
+        _editor_js_interop = new(Id, Value, Tools, Configurations, JSRuntime, OnContentChangedRequestAsync);
         await base.OnInitializedAsync();
     }
 

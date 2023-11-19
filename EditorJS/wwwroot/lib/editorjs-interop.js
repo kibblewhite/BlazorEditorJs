@@ -1,7 +1,7 @@
 ﻿const editorjs = {
 
     editorjs_elements: {},
-    options_naming_scheme_list: ["CamelCase", "PascalCase", "SnakeCase", "KebabCase"],
+    options_naming_scheme_list: [ 'CamelCase', 'PascalCase', 'SnakeCase', 'KebabCase' ],
     supported_tools_configuration_options: {
         Header: {
             inlineToolbar: ['marker', 'link'],
@@ -98,7 +98,7 @@
         let words = str.split(' ');
 
         switch (OptionsNamingScheme) {
-            case "CamelCase":
+            case 'CamelCase':
                 // Ensure that the first letter is lower cased
                 words[0] = words[0].charAt(0).toLowerCase() + words[0].slice(1);
                 // Iterate through the words, capitalizing the first letter of each word and joining them
@@ -106,15 +106,15 @@
                     words[i] = words[i].charAt(0).toUpperCase() + words[i].slice(1);
                 }
                 return words.join('');
-            case "PascalCase":
+            case 'PascalCase':
                 // Iterate through the words, capitalizing the first letter of each word and joining them
                 for (let i = 0; i < words.length; i++) {
                     words[i] = words[i].charAt(0).toUpperCase() + words[i].slice(1);
                 }
                 return words.join('');
-            case "SnakeCase":
+            case 'SnakeCase':
                 return words.join('_').toLowerCase();
-            case "KebabCase":
+            case 'KebabCase':
                 return words.join('-').toLowerCase();
         }
 
@@ -138,6 +138,8 @@
 
         if (typeof load_actions.LoadProviderClassFunctionDefault !== 'undefined' && typeof window[load_actions.LoadProviderClassFunctionDefault] !== 'undefined') {
             tool_options.class = window[load_actions.LoadProviderClassFunctionDefault];
+        } else if (typeof load_actions.LoadProviderClassFunctionDefault === 'boolean' && load_actions.LoadProviderClassFunctionDefault === false) {
+            tool_options = false;
         } else {
             tool_options.class = window[key];
         }
@@ -168,7 +170,7 @@
 
     },
 
-    init(id, jsob, tool_options, instance, callback) {
+    init(id, jsob, tool_options, configurations, instance, callback) {
 
         let tools = {};
 
@@ -190,13 +192,51 @@
         let options = {
             data: jsob,
             readOnly: false,
+            defaultBlock: typeof configurations.DefaultBlock === 'undefined' ? 'paragraph' : configurations.DefaultBlock,
             tools: tools,
             onChange: (api, event) => {
+
+                let block_count_limit = typeof configurations.BlockCountLimit === 'undefined' ? 0 : configurations.BlockCountLimit;
+                //if (block_count_limit !== 0) {
+                //    let block_count = api.blocks.getBlocksCount();
+                //    if (block_count > block_count_limit) {
+                //        let block_limit_index = block_count - 2;
+                //        let current_block_index = api.blocks.getCurrentBlockIndex();
+                //        api.blocks.delete(current_block_index);
+                //        api.caret.setToBlock('end', block_limit_index);
+                //        for (let i = block_count - 1; i >= block_limit_index; i--) {
+                //            if (i <= block_limit_index || i == current_block_index) { continue; }
+                //            api.blocks.delete(i);
+                //        }
+                //    }
+                //}
+
+                // <div class="ce-popover-item" data-item-name="text" style="display: none;"></div>
+
                 editorjs_element_save_debounced_callback(api, event, editorjs_element, instance, callback);
             }
         };
 
         let editorjs_element = editorjs.editorjs_element_selector(id, options);
+
+        //////
+
+        const codex_editor = document.querySelector('#' + id); // api.ui.nodes.wrapper.parentElement
+        const codex_editor_mutation_observer = new MutationObserver(() => {
+            let codex_editor_redactor = codex_editor.querySelector('div.codex-editor__redactor');
+            if (typeof codex_editor_redactor !== 'undefined') {
+                // Use optional chaining and nullish coalescing to handle potential undefined/null properties
+                let codex_editor_redactor_style_config = configurations?.CodexEditorRedactor?.style ?? {};
+                // Merge configurations.CodexEditorRedactor.style into codex_editor_redactor.style
+                Object.assign(codex_editor_redactor.style, codex_editor_redactor_style_config);
+                codex_editor_mutation_observer.disconnect();
+            }
+        });
+
+        // Configure and start the codex_editor_mutation_observer
+        codex_editor_mutation_observer.observe(codex_editor, { childList: true, subtree: true, attributes: true });
+
+        //////
 
         const editorjs_element_save_debounced_callback = editorjs.debounce((api, event, editorjs_element, instance, callback) => {
             editorjs_element.save().then((output_data) => {
@@ -211,7 +251,7 @@
 
     render(id, jsob) {
         let editorjs_element = editorjs.editorjs_element_selector(id);
-        console.debug("render", id, jsob, editorjs_element);
+        console.debug('render', id, jsob, editorjs_element);
         editorjs_element.clear();
         editorjs_element.render(jsob);
     },

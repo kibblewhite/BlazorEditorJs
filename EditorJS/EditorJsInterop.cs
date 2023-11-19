@@ -9,8 +9,9 @@ internal class EditorJsInterop : IAsyncDisposable
     private readonly JsonObject? _jsob;
     private readonly string _id;
     private readonly JsonObject _tools;
+    private readonly JsonObject _configurations;
 
-    public EditorJsInterop(string id, JsonObject? jsob, JsonObject tools, IJSRuntime js_runtime, Func<JsonObject, Task> on_change)
+    public EditorJsInterop(string id, JsonObject? jsob, JsonObject tools, JsonObject configurations, IJSRuntime js_runtime, Func<JsonObject, Task> on_change)
     {
         ArgumentNullException.ThrowIfNull(js_runtime, nameof(js_runtime));
         _js_runtime = js_runtime;
@@ -24,6 +25,7 @@ internal class EditorJsInterop : IAsyncDisposable
 
         _update_delegate = on_change;
         _tools = tools;
+        _configurations = configurations;
     }
 
     public async ValueTask DisposeAsync()
@@ -38,7 +40,7 @@ internal class EditorJsInterop : IAsyncDisposable
         if (_module_task is null) { return; }
 
         IJSObjectReference module = await _module_task.Value;
-        await module.InvokeVoidAsync("editorjs.init", _id, _jsob, _tools, DotNetObjectReference.Create(this), nameof(OnChangeAsync));
+        await module.InvokeVoidAsync("editorjs.init", _id, _jsob, _tools, _configurations, DotNetObjectReference.Create(this), nameof(OnChangeAsync));
     }
 
     public async Task RenderAsync(JsonObject jsob)
