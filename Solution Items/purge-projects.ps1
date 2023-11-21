@@ -9,7 +9,7 @@ function Purge-ProjectFiles {
         Write-Host "Scanning for items..."
     }
 
-    $itemsToRemove = Get-ChildItem "$RelativePath" -Include bin,obj,bld,Backup,_UpgradeReport_Files,Debug,Release,ipch -Recurse
+    $itemsToRemove = Get-ChildItem "$RelativePath" -Include bin,obj,bld,Backup,_UpgradeReport_Files,Debug,Release,ipch,Publish -Recurse
     $totalItems = $itemsToRemove.Count
     $currentItem = 0
 
