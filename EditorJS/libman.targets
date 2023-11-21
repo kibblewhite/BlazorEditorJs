@@ -4,13 +4,13 @@
 	<Target Name="BuildCombinedJS" BeforeTargets="Build">
 
 		<!-- List of all the files to concatenate. -->
-		<CreateItem Include="wwwroot/lib/EditorJs/*/dist/*.min.js">
+		<CreateItem Include="wwwroot/lib/EditorJs/*/dist/*.min.js" Exclude="wwwroot/lib/EditorJs/*/dist/*.umd.min.js">
 			<Output TaskParameter="Include" ItemName="JsFilesToCombine" />
 		</CreateItem>
 
 		<!-- Read the contents of the files (preserving tabs/spaces). -->
 		<ReadLinesFromFile File="%(JsFilesToCombine.FullPath)">
-			<Output TaskParameter="Lines" ItemName="JsLines" />
+			<Output TaskParameter="Lines" ItemName="JsLines" /> 
 		</ReadLinesFromFile>
 
 		<!-- Write the result to a single file. -->
