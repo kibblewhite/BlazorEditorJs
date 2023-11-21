@@ -21,7 +21,7 @@ internal class EditorJsInterop : IAsyncDisposable
         _jsob = jsob;
         _module_task = new Lazy<Task<IJSObjectReference>>(() =>
                  _js_runtime.InvokeAsync<IJSObjectReference>("import",
-                     "./_content/EditorJs/lib/editorjs-interop.js").AsTask());
+                     "./_content/EditorJS/lib/editorjs-interop.js").AsTask());
 
         _update_delegate = on_change;
         _tools = tools;
