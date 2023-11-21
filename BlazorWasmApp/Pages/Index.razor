@@ -7,4 +7,17 @@
 
 Welcome to your new app.
 
-<Editor Id="editorjs-blazor" Name="editorjs-blazor" Value="EditorValue" ValueChanged="OnEditorValueChanged" Tools="EditorTools" Configurations="EditorConfigurations" Style="border: thin dashed grey; max-height: 40px; padding: 0 10px 0 10px;" />
+<div class="container">
+    <div class="row py-2">
+        <div class="col">
+            <div class="btn-group" role="group">
+                <button type="button" class="btn btn-outline-primary" @onclick="CheckEditorValueAsync">Check Value (Console)</button>
+            </div>
+        </div>
+    </div>
+    <div class="row py-2">
+        <div class="col">
+            <Editor Id="editorjs-blazor" Name="editorjs-blazor" Value="EditorValue" ValueChanged="OnEditorValueChanged" Tools="EditorTools" Configurations="EditorConfigurations" Style="border: thin dashed grey; max-height: 40px; padding: 0 10px 0 10px;" />
+        </div>
+    </div>
+</div>

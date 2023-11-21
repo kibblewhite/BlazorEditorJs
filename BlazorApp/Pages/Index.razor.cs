@@ -1,3 +1,5 @@
+using System.Text.Json;
+
 namespace BlazorApp.Pages;
 
 public partial class Index
@@ -11,16 +13,19 @@ public partial class Index
 
     public JsonObject? EditorValue { get; set; }
     public JsonObject EditorTools { get; set; } = default!;
+    public JsonObject EditorConfigurations { get; set; } = default!;
     public Task OnEditorValueChanged(JsonObject value) => Task.FromResult(EditorValue = value);
 
     public JsonObject? EditorValue02 { get; set; }
     public JsonObject EditorTools02 { get; set; } = default!;
+    public JsonObject EditorConfigurations02 { get; set; } = default!;
     public Task OnEditorValue02Changed(JsonObject value) => Task.FromResult(EditorValue02 = value);
 
     protected override void OnInitialized()
     {
         EditorTools = Editor.DefaultEditorJsonToolOptions();
         EditorValue = Editor.ParseJsonEditorValue(Resource.JSON);
+        EditorConfigurations = JsonNode.Parse("""{ "DefaultBlock": "paragraph" }""")?.AsObject() ?? new();
 
         // If the browser recieves the following error: "Saving failed due to the Error TypeError: Cannot read properties of undefined (reading 'sanitizeConfig')"
         // This is because edtorjs has certain dependencies caused by the `header.inlineToolbar' array values. EditorJS should have the appropriate tools/plugins enabled.
@@ -31,13 +36,14 @@ public partial class Index
 
         EditorTools02 = Editor.ParseEditorJsonToolOptions(editor_tools_02);
         EditorValue02 = Editor.CreateEmptyJsonObject();
+        EditorConfigurations02 = JsonNode.Parse("""{ "DefaultBlock": "paragraph" }""")?.AsObject() ?? new();
     }
 
     public async Task CheckEditorValueAsync()
     {
-        string value = EditorValue?.ToString() ?? string.Empty;
-        Console.WriteLine(value);
-        await JSRuntime.InvokeVoidAsync("console.log", value);
+        JsonElement? json_element = EditorValue?.ConvertToJsonElement();
+        string? unicode_decoded_json_string = json_element?.ToString();
+        await JSRuntime.InvokeVoidAsync("console.log", unicode_decoded_json_string);
     }
 
     public async Task CopyValueAsync()
@@ -45,6 +51,7 @@ public partial class Index
         if (editor_02 is null || EditorValue is null) { return; }
 
         // todo (2023-10-17|kibble): Block comparison between the two editor values because maybe not all blocks are supported in the target editor.
+        // Look at the `EditorTools` to check for blocks, in the future the tools/blocks should be explictly defined in order for this feature to work as intended.
         await editor_02.RenderAsync(EditorValue);
     }
 }

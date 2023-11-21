@@ -72,7 +72,7 @@ Or load only the plugins that are required (`editorjs/dist/editor.js` mandatory)
             // When not null, this will override the `OptionsNamingScheme`
             // and the value coming in from the root name identifier
             // and use this exactly as it is defined here.
-            "OverrideOptionsKey": "linkTools"               
+            "OverrideOptionsKey": "linkTools"
         },
         "options": null
     }

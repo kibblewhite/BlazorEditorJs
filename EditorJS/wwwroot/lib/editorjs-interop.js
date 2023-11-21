@@ -180,10 +180,10 @@
                 continue;
             }
 
-            let options = editorjs._get_validated_load_options(tool_options[key]);
+            let tool_key_options = editorjs._get_validated_load_options(tool_options[key]);
             let tool_key = editorjs._format_string(key, tool_options[key].LoadActions);
             let output = {
-                [tool_key]: editorjs._merge_tool_options(id, key, options, tool_options[key].LoadActions)
+                [tool_key]: editorjs._merge_tool_options(id, key, tool_key_options, tool_options[key].LoadActions)
             };
 
             tools = Object.assign(tools, output);
@@ -192,11 +192,10 @@
         let options = {
             data: jsob,
             readOnly: false,
-            defaultBlock: typeof configurations.DefaultBlock === 'undefined' ? 'paragraph' : configurations.DefaultBlock,
             tools: tools,
             onChange: (api, event) => {
 
-                let block_count_limit = typeof configurations.BlockCountLimit === 'undefined' ? 0 : configurations.BlockCountLimit;
+                // let block_count_limit = typeof configurations.BlockCountLimit === 'undefined' ? 0 : configurations.BlockCountLimit;
                 //if (block_count_limit !== 0) {
                 //    let block_count = api.blocks.getBlocksCount();
                 //    if (block_count > block_count_limit) {
@@ -216,6 +215,11 @@
                 editorjs_element_save_debounced_callback(api, event, editorjs_element, instance, callback);
             }
         };
+
+        if (typeof configurations.DefaultBlock !== 'undefined') {
+            let default_block_option = { defaultBlock: configurations.DefaultBlock };
+            options = Object.assign(options, default_block_option);
+        }
 
         let editorjs_element = editorjs.editorjs_element_selector(id, options);
 
@@ -240,10 +244,10 @@
 
         const editorjs_element_save_debounced_callback = editorjs.debounce((api, event, editorjs_element, instance, callback) => {
             editorjs_element.save().then((output_data) => {
-                console.debug('Saving', output_data, api, event);
                 instance.invokeMethodAsync(callback, output_data);
             }).catch((error) => {
-                console.error('Saving Failed', error)
+                console.error('Saving Failed', error, api, event);
+                // todo (2023-11-19|kibble): Invoke (using instance.invokeMethodAsync) a failure endpoint to log error and record incident to a backend
             });
         });
 
