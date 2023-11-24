@@ -7,10 +7,6 @@
       "destination": "wwwroot/lib/editorjs/editorjs/"
     },
     {
-      "library": "editorjs-text@1.1.1",
-      "destination": "wwwroot/lib/editorjs/text/"
-    },
-    {
       "library": "@editorjs/attaches@1.3.0",
       "destination": "wwwroot/lib/editorjs/attaches/"
     },
@@ -89,6 +85,10 @@
     {
       "library": "@editorjs/warning@1.3.0",
       "destination": "wwwroot/lib/editorjs/warning/"
+    },
+    {
+      "library": "editorjs-text@1.1.2",
+      "destination": "wwwroot/lib/editorjs/text/"
     }
   ]
 }

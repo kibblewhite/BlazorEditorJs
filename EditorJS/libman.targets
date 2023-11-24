@@ -4,7 +4,7 @@
 	<Target Name="BuildCombinedJS" BeforeTargets="Build">
 
 		<!-- List of all the files to concatenate. -->
-		<CreateItem Include="wwwroot/lib/EditorJs/*/dist/*.min.js" Exclude="wwwroot/lib/EditorJs/text/dist/*.min.js">
+		<CreateItem Include="wwwroot/lib/EditorJs/*/dist/*.min.js">
 			<Output TaskParameter="Include" ItemName="JsFilesToCombine" />
 		</CreateItem>
 
