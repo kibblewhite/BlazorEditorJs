@@ -28,7 +28,7 @@ public partial class Index
         """;
 
         EditorTools = Editor.ParseEditorJsonToolOptions(editor_tools);
-        EditorConfigurations = JsonNode.Parse("""{ "DefaultBlock": "text", "CodexEditorRedactor" : { "style": { "paddingBottom": "0px", "maxHeight": "64px", "overflow": "hidden" } } }""")?.AsObject() ?? new();
+        EditorConfigurations = JsonNode.Parse("""{ "DefaultBlock": "text", "CodexEditorRedactor" : { "style": { "paddingBottom": "0px", "maxHeight": "64px", "overflow": "hidden" } } }""")?.AsObject() ?? [];
     }
 
     public async Task CheckEditorValueAsync()
