@@ -1,9 +1,3 @@
-using Microsoft.AspNetCore.Components;
-using Microsoft.JSInterop;
-using System.Text.Json.Nodes;
-using System.Text.Json;
-using EditorJS;
-
 namespace BlazorEditorJs.App.Client.Pages;
 
 [Route("/")]
@@ -26,7 +20,6 @@ public partial class Home : ComponentBase
     public JsonObject EditorTools02 { get; set; } = default!;
     public JsonObject EditorConfigurations02 { get; set; } = default!;
     public Task OnEditorValue02Changed(JsonObject value) => Task.FromResult(EditorValue02 = value);
-
 
     protected override void OnInitialized()
     {
@@ -51,23 +44,14 @@ public partial class Home : ComponentBase
 
         EditorTools02 = Editor.ParseEditorJsonToolOptions(editor_tools_02);
         EditorValue02 = Editor.CreateEmptyJsonObject();
-        EditorConfigurations02 = JsonNode.Parse("""{ "DefaultBlock": "paragraph" }""")?.AsObject() ?? new();
+        EditorConfigurations02 = JsonNode.Parse("""{ "DefaultBlock": "paragraph" }""")?.AsObject() ?? [];
 
     }
 
-    //public async Task CheckEditorValueAsync()
-    //{
-    //    JsonElement? json_element = EditorValue?.ConvertToJsonElement();
-    //    string? unicode_decoded_json_string = json_element?.ToString();
-    //    await JSRuntime.InvokeVoidAsync("console.log", unicode_decoded_json_string);
-    //}
-
-    public async Task CopyValueAsync()
+    public async Task CheckEditorValueAsync()
     {
-        if (editor_02 is null || EditorValue is null) { return; }
-
-        // todo (2023-10-17|kibble): Block comparison between the two editor values because maybe not all blocks are supported in the target editor.
-        // Look at the `EditorTools` to check for blocks, in the future the tools/blocks should be explictly defined in order for this feature to work as intended.
-        await editor_02.RenderAsync(EditorValue);
+        JsonElement? json_element = EditorValue?.ConvertToJsonElement();
+        string? unicode_decoded_json_string = json_element?.ToString();
+        await JSRuntime.InvokeVoidAsync("console.log", unicode_decoded_json_string);
     }
 }
