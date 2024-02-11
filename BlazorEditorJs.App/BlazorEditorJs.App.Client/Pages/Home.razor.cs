@@ -29,7 +29,31 @@ public partial class Home : ComponentBase
         // string editor_tools = """{"Toggle":{"LoadActions":{"LoadProviderClassFunctionDefault":"ToggleBlock","OptionsNamingScheme":"CamelCase"},"options":{"inlineToolbar":true}},"Header":{"LoadActions":{"OptionsNamingScheme":"CamelCase"}},"LinkTool":{"LoadActions":{"OptionsNamingScheme":"CamelCase"}},"NestedList":{"LoadActions":{"OptionsNamingScheme":"CamelCase","OverrideOptionsKey":"list"}},"Marker":{"LoadActions":{"OptionsNamingScheme":"CamelCase"}},"Warning":{"LoadActions":{"OptionsNamingScheme":"CamelCase"}},"Checklist":{"LoadActions":{"OptionsNamingScheme":"CamelCase"}},"CodeTool":{"LoadActions":{"OptionsNamingScheme":"CamelCase","OverrideOptionsKey":"code"}},"Delimiter":{"LoadActions":{"OptionsNamingScheme":"CamelCase"}},"SimpleImage":{"LoadActions":{"OptionsNamingScheme":"CamelCase","OverrideOptionsKey":"image"}},"Embed":{"LoadActions":{"OptionsNamingScheme":"CamelCase"},"options":{"config":{"services":{"instagram":true,"youtube":true,"vimeo":true,"imgur":true,"twitter":true,"facebook":true}}}},"InlineCode":{"LoadActions":{"OptionsNamingScheme":"CamelCase"}},"Quote":{"LoadActions":{"OptionsNamingScheme":"CamelCase"}},"Table":{"LoadActions":{"OptionsNamingScheme":"CamelCase"}}}""";
 
         string editor_tools = """
-            {"Paragraph":{"LoadActions":{"LoadProviderClassFunctionDefault":false,"OptionsNamingScheme":"CamelCase"}},"Text":{"LoadActions":{"LoadProviderClassFunctionDefault":"TextElement","OptionsNamingScheme":"CamelCase"},"options":{"inlineToolbar":true,"config":{"placeholder":"...","preserveBlank":false,"allowEnterKeyDown":false,"hidePopoverItem":true,"hideToolbar":true,"wrapElement":"title"}}}}
+        {
+          "Paragraph": {
+            "LoadActions": {
+              "LoadProviderClassFunctionDefault": false,
+              "OptionsNamingScheme": "CamelCase"
+            }
+          },
+          "Text": {
+            "LoadActions": {
+              "LoadProviderClassFunctionDefault": "TextElement",
+              "OptionsNamingScheme": "CamelCase"
+            },
+            "options": {
+              "inlineToolbar": true,
+              "config": {
+                "placeholder": "...",
+                "preserveBlank": false,
+                "allowEnterKeyDown": false,
+                "hidePopoverItem": true,
+                "hideToolbar": true,
+                "wrapElement": "title"
+              }
+            }
+          }
+        }
         """;
 
         EditorTools = EditorJS.Editor.ParseEditorJsonToolOptions(editor_tools);
@@ -39,7 +63,83 @@ public partial class Home : ComponentBase
         // This is because edtorjs has certain dependencies caused by the `header.inlineToolbar' array values. EditorJS should have the appropriate tools/plugins enabled.
         // This error will also occur because of unsupported blocks in the editor and the whole editor document may need to be reset.
         string editor_tools_02 = """
-            {"Header":{"LoadActions":{"OptionsNamingScheme":"CamelCase"}},"LinkTool":{"LoadActions":{"OptionsNamingScheme":"CamelCase"}},"NestedList":{"LoadActions":{"OptionsNamingScheme":"CamelCase","OverrideOptionsKey":"list"}},"Marker":{"LoadActions":{"OptionsNamingScheme":"CamelCase"}},"Checklist":{"LoadActions":{"OptionsNamingScheme":"CamelCase"}},"CodeTool":{"LoadActions":{"OptionsNamingScheme":"CamelCase","OverrideOptionsKey":"code"}},"Delimiter":{"LoadActions":{"OptionsNamingScheme":"CamelCase"}},"SimpleImage":{"LoadActions":{"OptionsNamingScheme":"CamelCase","OverrideOptionsKey":"image"}},"Embed":{"LoadActions":{"OptionsNamingScheme":"CamelCase"},"options":{"config":{"services":{"instagram":true,"youtube":true,"vimeo":true,"imgur":true,"twitter":true,"facebook":true}}}},"InlineCode":{"LoadActions":{"OptionsNamingScheme":"CamelCase"}},"Quote":{"LoadActions":{"OptionsNamingScheme":"CamelCase"}},"Table":{"LoadActions":{"OptionsNamingScheme":"CamelCase"}}}
+        {
+          "Header": {
+            "LoadActions": {
+              "OptionsNamingScheme": "CamelCase"
+            }
+          },
+          "LinkTool": {
+            "LoadActions": {
+              "OptionsNamingScheme": "CamelCase"
+            }
+          },
+          "NestedList": {
+            "LoadActions": {
+              "OptionsNamingScheme": "CamelCase",
+              "OverrideOptionsKey": "list"
+            }
+          },
+          "Marker": {
+            "LoadActions": {
+              "OptionsNamingScheme": "CamelCase"
+            }
+          },
+          "Checklist": {
+            "LoadActions": {
+              "OptionsNamingScheme": "CamelCase"
+            }
+          },
+          "CodeTool": {
+            "LoadActions": {
+              "OptionsNamingScheme": "CamelCase",
+              "OverrideOptionsKey": "code"
+            }
+          },
+          "Delimiter": {
+            "LoadActions": {
+              "OptionsNamingScheme": "CamelCase"
+            }
+          },
+          "SimpleImage": {
+            "LoadActions": {
+              "OptionsNamingScheme": "CamelCase",
+              "OverrideOptionsKey": "image"
+            }
+          },
+          "Embed": {
+            "LoadActions": {
+              "OptionsNamingScheme": "CamelCase"
+            },
+            "options": {
+              "config": {
+                "services": {
+                  "instagram": true,
+                  "youtube": true,
+                  "vimeo": true,
+                  "imgur": true,
+                  "twitter": true,
+                  "facebook": true
+                }
+              }
+            }
+          },
+          "InlineCode": {
+            "LoadActions": {
+              "OptionsNamingScheme": "CamelCase"
+            }
+          },
+          "Quote": {
+            "LoadActions": {
+              "OptionsNamingScheme": "CamelCase"
+            }
+          },
+          "Table": {
+            "LoadActions": {
+              "OptionsNamingScheme": "CamelCase"
+            }
+          }
+        }
         """; // "Warning":{"LoadActions":{"OptionsNamingScheme":"CamelCase"}}
 
         EditorTools02 = Editor.ParseEditorJsonToolOptions(editor_tools_02);
