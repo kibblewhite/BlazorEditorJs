@@ -150,7 +150,7 @@ public partial class Home : ComponentBase
 
     public async Task CheckEditorValueAsync()
     {
-        JsonElement? json_element = EditorValue?.ConvertToJsonElement();
+        JsonElement? json_element = EditorValue02?.ConvertToJsonElement();
         string? unicode_decoded_json_string = json_element?.ToString();
         await JSRuntime.InvokeVoidAsync("console.log", unicode_decoded_json_string);
     }

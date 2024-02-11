@@ -8,4 +8,8 @@
 
 <hr />
 
+<div class="btn-group" role="group">
+    <button type="button" class="btn btn-outline-primary" @onclick="CheckEditorValueAsync">Check Value (Console)</button>
+</div>
+
 <Editor @ref="editor_02" Id="editorjs-blazor-02" Name="editorjs-blazor-02" Value="EditorValue02" ValueChanged="OnEditorValue02Changed" Tools="EditorTools02" Configurations="EditorConfigurations02" Style="margin-top: 20px; border: thin dashed grey; padding: 0 20px 0 20px;" />
