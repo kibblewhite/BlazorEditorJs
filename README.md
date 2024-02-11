@@ -15,9 +15,9 @@ All I ask for is a github star for me and one for the editorjs repository if you
 ---
 
 To see it's usage, please visit the `BlazorApp` project and inspect the files:
-- BlazorApp\Pages\Index.razor
-- BlazorApp\Pages\Index.razor.cs
-- EditorJS\README.md
+- BlazorEditorJs.App\BlazorEditorJs.App.Client\Pages\Home.razor
+- BlazorEditorJs.App\BlazorEditorJs.App.Client\Pages\Home.razor.cs
+- BlazorEditorJs.Lib\README.md
 
 ---
 
@@ -46,5 +46,5 @@ Did you know that you can dynamically load plugin-tools from external CDN and th
 Notes:
 
 ```bash
-dotnet nuget push EditorJS/bin/Release/net7.0/publish/EditorJS.*.nupkg -k <api-key /> -s https://api.nuget.org/v3/index.json
+dotnet nuget push EditorJS/bin/Release/net8.0/publish/EditorJS.*.nupkg -k <api-key /> -s https://api.nuget.org/v3/index.json
 ```
