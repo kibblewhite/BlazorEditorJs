@@ -1,0 +1,55 @@
+{
+  "name": "@editorjs/link",
+  "version": "2.6.2",
+  "keywords": [
+    "codex editor",
+    "tool",
+    "link",
+    "editor.js",
+    "editor"
+  ],
+  "description": "Link Tool for Editor.js",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/editor-js/link.git"
+  },
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/link.umd.js",
+  "module": "./dist/link.mjs",
+  "exports": {
+    ".": {
+      "import": "./dist/link.mjs",
+      "require": "./dist/link.umd.js"
+    }
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint src/",
+    "lint:fix": "eslint src/ --fix"
+  },
+  "author": "CodeX <team@codex.so>",
+  "devDependencies": {
+    "@codexteam/ajax": "^4.1.0",
+    "eslint": "^7.1.0",
+    "eslint-config-codex": "^1.3.6",
+    "eslint-loader": "^4.0.2",
+    "open-graph": "^0.2.4",
+    "postcss-nested": "^4.2.1",
+    "postcss-nested-ancestors": "^2.0.0",
+    "url-polyfill": "^1.1.9",
+    "vite": "^4.5.0",
+    "vite-plugin-css-injected-by-js": "^3.3.0"
+  },
+  "bugs": {
+    "url": "https://github.com/editor-js/link/issues"
+  },
+  "homepage": "https://github.com/editor-js/link#readme",
+  "dependencies": {
+    "@babel/runtime": "^7.10.2",
+    "@codexteam/icons": "^0.0.4"
+  }
+}

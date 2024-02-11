@@ -1,0 +1,47 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<LangVersion>12.0</LangVersion>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Version>2.0.0.1</Version>
+		<AddRazorSupportForMvc>true</AddRazorSupportForMvc>
+		<AssemblyName>EditorJS</AssemblyName>
+		<RootNamespace>EditorJS</RootNamespace>
+		<Authors>kibblewhite &lt;kibblewhite@live.com&gt;</Authors>
+		<Description>A Blazor component implementation for EditorJS.io a block styled editor.</Description>
+		<PackageTags>editorjs;blazor;blazor-editorjs;editorjs-blazor</PackageTags>
+		<PackageIcon>editorjs.png</PackageIcon>
+		<ApplicationIcon>editorjs.ico</ApplicationIcon>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageLicenseFile>LICENSE</PackageLicenseFile>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+		<IsPackable>true</IsPackable>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<SupportedPlatform Include="browser" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="LICENSE" Pack="true" PackagePath="" />
+		<None Include="editorjs.ico" Pack="true" PackagePath="" />
+		<None Include="editorjs.png" Pack="true" PackagePath="" />
+		<None Include="README.md" Pack="true" PackagePath="" />
+		<Content Remove="wwwroot\lib\editorjs\**\.*" />
+	</ItemGroup>
+
+	<Import Project="libman.targets" />
+
+	<ItemGroup>
+		<SupportedPlatform Include="browser" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.1" />
+		<PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="2.1.175" />
+	</ItemGroup>
+
+</Project>

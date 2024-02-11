@@ -1,0 +1,39 @@
+{
+  "name": "@editorjs/code",
+  "version": "2.9.0",
+  "keywords": [
+    "codex editor",
+    "code",
+    "editor.js",
+    "editorjs"
+  ],
+  "description": "Code Tool for Editor.js",
+  "license": "MIT",
+  "repository": "https://github.com/editor-js/code",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/code.umd.js",
+  "module": "./dist/code.mjs",
+  "exports": {
+    ".": {
+      "import": "./dist/code.mjs",
+      "require": "./dist/code.umd.js"
+    }
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "author": {
+    "name": "CodeX Team",
+    "email": "team@codex.so"
+  },
+  "devDependencies": {
+    "vite": "^4.5.0",
+    "vite-plugin-css-injected-by-js": "^3.3.0"
+  },
+  "dependencies": {
+    "@codexteam/icons": "^0.0.5"
+  }
+}

@@ -1,0 +1,94 @@
+{
+  "version": "1.0",
+  "defaultProvider": "jsdelivr",
+  "libraries": [
+    {
+      "library": "@editorjs/editorjs@2.29.1",
+      "destination": "wwwroot/lib/editorjs/editorjs/"
+    },
+    {
+      "library": "@editorjs/attaches@1.3.0",
+      "destination": "wwwroot/lib/editorjs/attaches/"
+    },
+    {
+      "library": "@editorjs/checklist@1.6.0",
+      "destination": "wwwroot/lib/editorjs/checklist/"
+    },
+    {
+      "library": "@editorjs/code@2.9.0",
+      "destination": "wwwroot/lib/editorjs/code/"
+    },
+    {
+      "library": "@editorjs/delimiter@1.4.0",
+      "destination": "wwwroot/lib/editorjs/delimiter/"
+    },
+    {
+      "library": "@editorjs/embed@2.7.0",
+      "destination": "wwwroot/lib/editorjs/embed/"
+    },
+    {
+      "library": "@editorjs/header@2.8.1",
+      "destination": "wwwroot/lib/editorjs/header/"
+    },
+    {
+      "library": "@editorjs/image@2.9.0",
+      "destination": "wwwroot/lib/editorjs/image/"
+    },
+    {
+      "library": "@editorjs/inline-code@1.5.0",
+      "destination": "wwwroot/lib/editorjs/inline-code/"
+    },
+    {
+      "library": "@editorjs/link@2.6.2",
+      "destination": "wwwroot/lib/editorjs/link/"
+    },
+    {
+      "library": "@editorjs/list@1.9.0",
+      "destination": "wwwroot/lib/editorjs/list/"
+    },
+    {
+      "library": "@editorjs/marker@1.4.0",
+      "destination": "wwwroot/lib/editorjs/marker/"
+    },
+    {
+      "library": "@editorjs/nested-list@1.4.2",
+      "destination": "wwwroot/lib/editorjs/nested-list/"
+    },
+    {
+      "library": "@editorjs/paragraph@2.11.3",
+      "destination": "wwwroot/lib/editorjs/paragraph/"
+    },
+    {
+      "library": "@editorjs/opensea@1.0.2",
+      "destination": "wwwroot/lib/editorjs/opensea/"
+    },
+    {
+      "library": "@editorjs/quote@2.6.0",
+      "destination": "wwwroot/lib/editorjs/quote/"
+    },
+    {
+      "library": "@editorjs/raw@2.5.0",
+      "destination": "wwwroot/lib/editorjs/raw/"
+    },
+    {
+      "library": "@editorjs/simple-image@1.6.0",
+      "destination": "wwwroot/lib/editorjs/simple-image/"
+    },
+    {
+      "library": "@editorjs/table@2.3.0",
+      "destination": "wwwroot/lib/editorjs/table/"
+    },
+    {
+      "library": "@editorjs/underline@1.1.0",
+      "destination": "wwwroot/lib/editorjs/underline/"
+    },
+    {
+      "library": "@editorjs/warning@1.4.0",
+      "destination": "wwwroot/lib/editorjs/warning/"
+    },
+    {
+      "library": "editorjs-text@0.1.4",
+      "destination": "wwwroot/lib/editorjs/text/"
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "name": "@editorjs/quote",
+  "version": "2.6.0",
+  "keywords": [
+    "codex editor",
+    "quote",
+    "editor.js",
+    "editorjs"
+  ],
+  "description": "Quote Tool for Editor.js",
+  "license": "MIT",
+  "repository": "https://github.com/editor-js/quote",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/quote.umd.js",
+  "module": "./dist/quote.mjs",
+  "exports": {
+    ".": {
+      "import": "./dist/quote.mjs",
+      "require": "./dist/quote.umd.js"
+    }
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "author": {
+    "name": "CodeX",
+    "email": "team@codex.so"
+  },
+  "devDependencies": {
+    "vite": "^4.5.0",
+    "vite-plugin-css-injected-by-js": "^3.3.0"
+  },
+  "dependencies": {
+    "@codexteam/icons": "^0.0.5"
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "name": "@editorjs/table",
+  "description": "Table for Editor.js",
+  "version": "2.3.0",
+  "license": "MIT",
+  "repository": "https://github.com/editor-js/table",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/table.umd.js",
+  "module": "./dist/table.mjs",
+  "exports": {
+    ".": {
+      "import": "./dist/table.mjs",
+      "require": "./dist/table.umd.js"
+    }
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint -c ./.eslintrc --ext .js --fix ."
+  },
+  "author": {
+    "name": "CodeX Team",
+    "email": "team@ifmo.su"
+  },
+  "keywords": [
+    "codex",
+    "codex-editor",
+    "table",
+    "editor.js",
+    "editorjs"
+  ],
+  "devDependencies": {
+    "autoprefixer": "^9.3.1",
+    "css-loader": "^1.0.0",
+    "cssnano": "^4.1.7",
+    "eslint": "^5.8.0",
+    "eslint-config-codex": "github:codex-team/eslint-config",
+    "postcss-import": "^12.0.1",
+    "postcss-nested": "^4.1.0",
+    "postcss-nesting": "^7.0.0",
+    "vite": "^4.5.0",
+    "vite-plugin-css-injected-by-js": "^3.3.0"
+  },
+  "dependencies": {
+    "@codexteam/icons": "^0.0.6"
+  }
+}

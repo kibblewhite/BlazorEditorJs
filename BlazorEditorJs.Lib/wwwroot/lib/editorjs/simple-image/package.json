@@ -1,0 +1,40 @@
+{
+  "name": "@editorjs/simple-image",
+  "version": "1.6.0",
+  "keywords": [
+    "codex editor",
+    "image",
+    "server-less",
+    "editor.js",
+    "editorjs"
+  ],
+  "description": "SimpleImage Tool for Editor.js",
+  "license": "MIT",
+  "repository": "https://github.com/editor-js/simple-image",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/simple-image.umd.js",
+  "module": "./dist/simple-image.mjs",
+  "exports": {
+    ".": {
+      "import": "./dist/simple-image.mjs",
+      "require": "./dist/simple-image.umd.js"
+    }
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "author": {
+    "name": "CodeX",
+    "email": "team@codex.so"
+  },
+  "devDependencies": {
+    "vite": "^4.5.0",
+    "vite-plugin-css-injected-by-js": "^3.3.0"
+  },
+  "dependencies": {
+    "@codexteam/icons": "^0.0.6"
+  }
+}

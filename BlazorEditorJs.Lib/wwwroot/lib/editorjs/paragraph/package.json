@@ -1,0 +1,38 @@
+{
+  "name": "@editorjs/paragraph",
+  "version": "2.11.3",
+  "keywords": [
+    "codex editor",
+    "paragraph",
+    "editor.js",
+    "editorjs"
+  ],
+  "description": "Paragraph Tool for Editor.js",
+  "license": "MIT",
+  "repository": "https://github.com/editor-js/paragraph",
+  "files": ["dist"],
+  "main": "./dist/paragraph.umd.js",
+  "module": "./dist/paragraph.mjs",
+  "exports": {
+    ".": {
+      "import": "./dist/paragraph.mjs",
+      "require": "./dist/paragraph.umd.js"
+    }
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "author": {
+    "name": "CodeX",
+    "email": "team@codex.so"
+  },
+  "devDependencies": {
+    "vite": "^4.4.11",
+    "vite-plugin-css-injected-by-js": "^3.3.0"
+  },
+  "dependencies": {
+    "@codexteam/icons": "^0.0.4"
+  }
+}

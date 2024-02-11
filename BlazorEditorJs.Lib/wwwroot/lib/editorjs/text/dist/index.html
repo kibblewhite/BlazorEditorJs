@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>editorjs-text</title>
+    <script src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@latest"></script>
+    <style>
+      .editor-container {
+        max-width: 1000px;
+        margin: 0 auto;
+        border: thin dashed grey;
+        padding: 20px;
+      }
+    </style>
+  </head>
+  <body>
+
+    <div id="editorjs" class="editor-container"></div>
+
+    <br />
+
+    <div id="editorjs2" class="editor-container"></div>
+
+    <button id="save-button">Save</button>
+    <pre id="output"></pre>
+
+    <script type="text/javascript" src="bundle.js"></script>
+    <script>
+
+      /**
+       * Initialize the Editor
+       */
+      const editor = new EditorJS({
+        holder: 'editorjs',
+        autofocus: true,
+        defaultBlock: 'text',
+        tools: {
+          paragraph: false,
+          text: {
+            class: TextElement,
+            inlineToolbar: true,
+            config: {
+              placeholder: '...',
+              preserveBlank: false,
+              allowEnterKeyDown: false,
+              hidePopoverItem: true,
+              hideToolbar: true,
+              wrapElement: 'title'
+            }
+          }
+        },
+        data: {
+          blocks: []
+        }
+      });
+
+      /**
+       * Initialize the Editor
+       */
+       const editor2 = new EditorJS({
+        holder: 'editorjs2',
+        autofocus: true,
+        defaultBlock: 'text',
+        tools: {
+          paragraph: false,
+          text: {
+            class: TextElement,
+            inlineToolbar: true,
+            config: {
+              placeholder: '...',
+              preserveBlank: false,
+              allowEnterKeyDown: false,
+              hidePopoverItem: false,
+              wrapElement: 'text'
+            }
+          }
+        },
+        data: {
+          blocks: []
+        }
+      });
+    
+      /**
+       * Add handler for the Save button
+       */
+      const saveButton = document.getElementById('save-button');
+      const output = document.getElementById('output');
+    
+      saveButton.addEventListener('click', () => {
+        editor.save().then(data => {
+
+          data.blocks.forEach(function (item, index, array) {
+            switch(item.type)
+            {
+              case "text":
+              {
+                array[index].data.text = encodeHTML(item.data.text);
+                break;
+              }
+            }
+          });
+
+          const json_string = JSON.stringify(data, null, 6);
+          output.innerHTML = json_string;
+        });
+      });
+
+      
+      function encodeHTML(html) {
+        let div_element = document.createElement('div');
+        let text_node = document.createTextNode(html);
+        div_element.appendChild(text_node);
+        return div_element.innerHTML;
+      }
+    </script>
+
+  </body>
+</html>
