@@ -260,7 +260,7 @@
         editorjs_element.render(jsob);
     },
 
-    debounce(callback, delay = 320) {
+    debounce(callback, delay = 60) {
         let timeoutId
         return (...args) => {
             clearTimeout(timeoutId)

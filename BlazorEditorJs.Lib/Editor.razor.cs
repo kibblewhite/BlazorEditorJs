@@ -45,7 +45,7 @@ public partial class Editor : ComponentBase
         """;
 
     private JsonObject _value = [];
-    private EditorJsInterop? _editor_js_interop;
+    private EditorJsInterop? _editor_js_interop = null;
 
     protected override async Task OnInitializedAsync()
     {
