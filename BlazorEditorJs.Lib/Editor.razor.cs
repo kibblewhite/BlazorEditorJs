@@ -25,6 +25,9 @@ public partial class Editor : ComponentBase
     public string? Style { get; init; }
 
     [Parameter]
+    public string? Class { get; init; }
+
+    [Parameter]
     public required JsonObject Tools { get; init; }
 
     [Parameter]
