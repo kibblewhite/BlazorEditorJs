@@ -18,6 +18,10 @@ Please view the BlazorApp project for the sample code.
 <Editor Id="editorjs-blazor" Name="editorjs-blazor" Value="EditorValue" ValueChanged="OnEditorValueChanged" Tools="EditorTools" Configurations="EditorConfigurations" Style="margin-top: 20px; border: thin dashed grey; padding: 0 20px 0 20px;" />
 ```
 
+Include interop service in DI container
+```
+builder.Services.AddScopedEditorJsInterop();
+```
 
 The value `EditorTools` is a csharp `JsonObject` containing the following in the code-behind:
 ```csharp
