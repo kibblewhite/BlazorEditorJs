@@ -1,6 +1,10 @@
-namespace BlazorEditorJs.App.Client.Pages;
+using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
+using System.Text.Json.Nodes;
+using System.Text.Json;
+using EditorJs;
 
-[Route("/")]
+namespace BlazorApp.Pages;
 public partial class Home : ComponentBase
 {
     [Inject]
@@ -14,16 +18,50 @@ public partial class Home : ComponentBase
     /// <summary>
     /// Use this to render new content into the editor
     /// </summary>
-    public Editor? editor_02 { get; set; }
+    public Editor? Editor02 { get; set; }
 
     public JsonObject? EditorValue02 { get; set; }
     public JsonObject EditorTools02 { get; set; } = default!;
     public JsonObject EditorConfigurations02 { get; set; } = default!;
     public Task OnEditorValue02Changed(JsonObject value) => Task.FromResult(EditorValue02 = value);
 
+    protected override void OnAfterRender(bool first_render)
+    {
+        if (first_render)
+        {
+            StateHasChanged();
+        }
+    }
+
+    public async Task InvokeInsertAsync()
+    {
+        if (Editor02 is null)
+        {
+            return;
+        }
+
+        string json_t = """
+            {
+              "time": 1717207275445,
+              "blocks": [
+                {
+                  "id": "mhTl6ghSkV",
+                  "type": "paragraph",
+                  "data": {
+                    "text": "Hey. Meet the new Editor. On this picture you can see it in action. Then, try a demo"
+                  }
+                }
+              ],
+              "version": "2.29.1"
+            }
+            """;
+        await Editor02.RenderAsync(JsonNode.Parse(json_t)?.AsObject() ?? []);
+    }
+
     protected override void OnInitialized()
     {
-        EditorValue = EditorJS.Editor.CreateEmptyJsonObject();
+        string json_t = """{"time": 1717207275445, "blocks": [{"id": "qDEsgkmbL1", "data": {"text": "Heylo, World!", "wrap": "title"}, "type": "text"}], "version": "2.29.1"}""";
+        EditorValue = JsonNode.Parse(json_t)?.AsObject() ?? [];
 
         // In this example the Toggle configurations have been dynamically loaded in from an external CDN -> https://github.com/kommitters/editorjs-toggle-block
         // string editor_tools = """{"Toggle":{"LoadActions":{"LoadProviderClassFunctionDefault":"ToggleBlock","OptionsNamingScheme":"CamelCase"},"options":{"inlineToolbar":true}},"Header":{"LoadActions":{"OptionsNamingScheme":"CamelCase"}},"LinkTool":{"LoadActions":{"OptionsNamingScheme":"CamelCase"}},"NestedList":{"LoadActions":{"OptionsNamingScheme":"CamelCase","OverrideOptionsKey":"list"}},"Marker":{"LoadActions":{"OptionsNamingScheme":"CamelCase"}},"Warning":{"LoadActions":{"OptionsNamingScheme":"CamelCase"}},"Checklist":{"LoadActions":{"OptionsNamingScheme":"CamelCase"}},"CodeTool":{"LoadActions":{"OptionsNamingScheme":"CamelCase","OverrideOptionsKey":"code"}},"Delimiter":{"LoadActions":{"OptionsNamingScheme":"CamelCase"}},"SimpleImage":{"LoadActions":{"OptionsNamingScheme":"CamelCase","OverrideOptionsKey":"image"}},"Embed":{"LoadActions":{"OptionsNamingScheme":"CamelCase"},"options":{"config":{"services":{"instagram":true,"youtube":true,"vimeo":true,"imgur":true,"twitter":true,"facebook":true}}}},"InlineCode":{"LoadActions":{"OptionsNamingScheme":"CamelCase"}},"Quote":{"LoadActions":{"OptionsNamingScheme":"CamelCase"}},"Table":{"LoadActions":{"OptionsNamingScheme":"CamelCase"}}}""";
@@ -56,7 +94,7 @@ public partial class Home : ComponentBase
         }
         """;
 
-        EditorTools = EditorJS.Editor.ParseEditorJsonToolOptions(editor_tools);
+        EditorTools = Editor.ParseEditorJsonToolOptions(editor_tools);
         EditorConfigurations = JsonNode.Parse("""{ "DefaultBlock": "text", "CodexEditorRedactor" : { "style": { "paddingBottom": "0px", "maxHeight": "64px", "overflow": "hidden" } } }""")?.AsObject() ?? [];
 
         // If the browser recieves the following error: "Saving failed due to the Error TypeError: Cannot read properties of undefined (reading 'sanitizeConfig')"

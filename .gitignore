@@ -351,6 +351,7 @@ MigrationBackup/
 .ionide/
 
 # Ignore these as they are built by the libman.json process
-/BlazorEditorJs.Lib/wwwroot/lib/editorjs
+/EditorJs/wwwroot/lib/editorjs
+/EditorJs/wwwroot/lib/editorjs-bundle.js
 /Solution Items/nuget-publish-command.md
-/BlazorEditorJs.Lib/wwwroot/lib/editorjs-bundle.js
+/Solution Items/nuget-publish-command.md

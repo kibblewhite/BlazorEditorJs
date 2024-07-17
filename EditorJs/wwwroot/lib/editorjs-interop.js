@@ -67,20 +67,25 @@
     },
 
     // This method handles the selection of multiple editorjs instances in the browser's DOM
-    editorjs_element_selector(id, options = {}) {
+    editorjs_element_selector(id, element_id, options = {}) {
 
-        if (typeof editorjs.editorjs_elements[id] === 'undefined') {
+        let identifier = editorjs._format_element_selector_key(id, element_id);
+        if (typeof editorjs.editorjs_elements[identifier] === 'undefined') {
 
             let editorjs_element = document.getElementById(id);
             if (editorjs_element === null) { return null; }
 
             options = Object.assign(options, { holder: id });
-            editorjs.editorjs_elements[id] = new EditorJS(options);
+            editorjs.editorjs_elements[identifier] = new EditorJS(options);
 
         }
 
-        return editorjs.editorjs_elements[id];
+        return editorjs.editorjs_elements[identifier];
 
+    },
+
+    _format_element_selector_key(id, element_id) {
+        return id + '.' + element_id;
     },
 
     _format_string(str, load_actions) {
@@ -131,7 +136,7 @@
         return json === null || typeof json === 'undefined' || (typeof json === 'object' && Object.keys(json).length === 0);
     },
 
-    _merge_tool_options(id, key, tool_options, load_actions) {
+    _merge_tool_options(key, tool_options, load_actions) {
 
         let default_options = editorjs.supported_tools_configuration_options[key] ?? {};
         tool_options = Object.assign(default_options, tool_options);
@@ -170,7 +175,7 @@
 
     },
 
-    init(id, jsob, tool_options, configurations, instance, callback) {
+    init(id, element_id, jsob, tool_options, configurations, instance, callback) {
 
         let tools = {};
 
@@ -183,7 +188,7 @@
             let tool_key_options = editorjs._get_validated_load_options(tool_options[key]);
             let tool_key = editorjs._format_string(key, tool_options[key].LoadActions);
             let output = {
-                [tool_key]: editorjs._merge_tool_options(id, key, tool_key_options, tool_options[key].LoadActions)
+                [tool_key]: editorjs._merge_tool_options(key, tool_key_options, tool_options[key].LoadActions)
             };
 
             tools = Object.assign(tools, output);
@@ -221,7 +226,7 @@
             options = Object.assign(options, default_block_option);
         }
 
-        let editorjs_element = editorjs.editorjs_element_selector(id, options);
+        let editorjs_element = editorjs.editorjs_element_selector(id, element_id, options);
 
         //////
 
@@ -244,7 +249,7 @@
 
         const editorjs_element_save_debounced_callback = editorjs.debounce((api, event, editorjs_element, instance, callback) => {
             editorjs_element.save().then((output_data) => {
-                instance.invokeMethodAsync(callback, output_data);
+                instance.invokeMethodAsync(callback, id, element_id, output_data);
             }).catch((error) => {
                 console.error('Saving Failed', error, api, event);
                 // todo (2023-11-19|kibble): Invoke (using instance.invokeMethodAsync) a failure endpoint to log error and record incident to a backend
@@ -253,10 +258,10 @@
 
     },
 
-    render(id, jsob) {
-        let editorjs_element = editorjs.editorjs_element_selector(id);
-        console.debug('render', id, jsob, editorjs_element);
-        editorjs_element.clear();
+    render(id, element_id, jsob) {
+        let editorjs_element = editorjs.editorjs_element_selector(id, element_id);
+        console.debug('render', id, element_id, jsob, editorjs_element);
+        editorjs_element.blocks.clear();
         editorjs_element.render(jsob);
     },
 

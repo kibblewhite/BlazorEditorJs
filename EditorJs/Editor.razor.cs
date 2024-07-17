@@ -1,34 +1,20 @@
-namespace EditorJS;
+namespace EditorJs;
 
 public partial class Editor : ComponentBase
 {
-    [Inject]
-    public required IJSRuntime JSRuntime { get; init; }
+    [Inject] public required EditorJsInterop EditorJsInterop { get; init; }
+    [Parameter] public EventCallback<JsonObject> ValueChanged { get; init; }
+    [Parameter] public JsonObject Value { get => _value; set => _value = value; }
+    [Parameter] public required string Id { get; set; }
+    [Parameter] public string? Name { get; init; }
+    [Parameter] public string? Style { get; init; }
+    [Parameter] public string? Class { get; init; }
+    [Parameter] public string? Title { get; init; }
+    [Parameter] public required JsonObject Tools { get; init; }
+    [Parameter] public required JsonObject Configurations { get; init; }
 
-    [Parameter]
-    public EventCallback<JsonObject> ValueChanged { get; init; }
-
-    [Parameter]
-    public JsonObject Value
-    {
-        get => _value;
-        set => _value = value;
-    }
-
-    [Parameter]
-    public required string Id { get; init; }
-
-    [Parameter]
-    public string? Name { get; init; }
-
-    [Parameter]
-    public string? Style { get; init; }
-
-    [Parameter]
-    public required JsonObject Tools { get; init; }
-
-    [Parameter]
-    public required JsonObject Configurations { get; init; }
+    private JsonObject _value = [];
+    public ElementReference ElementReference;
 
     /// <summary>
     /// Gets the default JSON configurations for editor tools as a string.
@@ -44,22 +30,19 @@ public partial class Editor : ComponentBase
             {"LinkTool":{"LoadActions":{"LoadProviderClassFunctionDefault":"LinkTool","OptionsNamingScheme":"CamelCase","OverrideOptionsKey":"linkTools"},"options":null},"List":{"LoadActions":{"OptionsNamingScheme":"CamelCase"},"options":{"inlineToolbar":true,"shortcut":"CMD+SHIFT+L"}},"Header":{"LoadActions":{"OptionsNamingScheme":"CamelCase"}},"Warning":{"LoadActions":{"OptionsNamingScheme":"CamelCase"}},"Marker":{"LoadActions":{"OptionsNamingScheme":"CamelCase"}},"NestedList":{"LoadActions":{"OptionsNamingScheme":"CamelCase","OverrideOptionsKey":"list"}},"Quote":{"LoadActions":{"OptionsNamingScheme":"CamelCase"}},"Embed":{"LoadActions":{"OptionsNamingScheme":"CamelCase"},"options":{"config":{"services":{"instagram":true}}}}}
         """;
 
-    private JsonObject _value = [];
-    private EditorJsInterop? _editor_js_interop = null;
+    private bool _should_render;
+    protected override bool ShouldRender() => _should_render;
 
-    protected override async Task OnInitializedAsync()
+    protected override async Task OnAfterRenderAsync(bool first_render)
     {
-        ArgumentNullException.ThrowIfNull(JSRuntime);
-        _editor_js_interop = new(Id, Value, Tools, Configurations, JSRuntime, OnContentChangedRequestAsync);
-        await base.OnInitializedAsync();
-    }
+        if (first_render is true && _should_render is false)
+        {
+            _should_render = true;
+            return;
+        }
 
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (firstRender is false) { return; }
-
-        ArgumentNullException.ThrowIfNull(_editor_js_interop);
-        await _editor_js_interop.InitAsync();
+        await EditorJsInterop.InitAsync(ElementReference, Id, Value, Tools, Configurations, OnContentChangedRequestAsync);
+        _should_render = false;
     }
 
     /// <summary>
@@ -72,9 +55,12 @@ public partial class Editor : ComponentBase
     /// </remarks>
     /// <param name="jsob">The updated JSON object that represents the new value in the editorjs.</param>
     /// <returns>A task that represents the asynchronous operation.</returns>
-    protected async Task OnContentChangedRequestAsync(JsonObject jsob)
+    public async Task OnContentChangedRequestAsync(JsonObject jsob)
     {
-        if (EqualityComparer<JsonObject>.Default.Equals(Value, jsob) is true) { return; }
+        if (EqualityComparer<JsonObject>.Default.Equals(Value, jsob) is true)
+        {
+            return;
+        }
 
         await ValueChanged.InvokeAsync(jsob);
         Value = jsob;
@@ -88,11 +74,13 @@ public partial class Editor : ComponentBase
     /// <returns>A task that represents the asynchronous rendering operation.</returns>
     public async Task RenderAsync(JsonObject jsob)
     {
-        ArgumentNullException.ThrowIfNull(_editor_js_interop);
-        if (EqualityComparer<JsonObject>.Default.Equals(Value, jsob) is true) { return; }
+        if (EqualityComparer<JsonObject>.Default.Equals(Value, jsob) is true)
+        {
+            return;
+        }
 
         await ValueChanged.InvokeAsync(jsob);
-        await _editor_js_interop.RenderAsync(jsob);
+        await EditorJsInterop.RenderAsync(ElementReference, Id, jsob);
         Value = jsob;
     }
 

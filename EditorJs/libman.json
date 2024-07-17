@@ -23,7 +23,7 @@
       "destination": "wwwroot/lib/editorjs/delimiter/"
     },
     {
-      "library": "@editorjs/embed@2.7.0",
+      "library": "@editorjs/embed@2.7.2",
       "destination": "wwwroot/lib/editorjs/embed/"
     },
     {
@@ -55,7 +55,7 @@
       "destination": "wwwroot/lib/editorjs/nested-list/"
     },
     {
-      "library": "@editorjs/paragraph@2.11.3",
+      "library": "@editorjs/paragraph@2.11.4",
       "destination": "wwwroot/lib/editorjs/paragraph/"
     },
     {

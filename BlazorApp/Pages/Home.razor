@@ -1,0 +1,21 @@
+﻿@page "/"
+@using EditorJs
+
+<PageTitle>Home</PageTitle>
+
+<h1>Hello, world!</h1>
+
+Welcome to your new app.
+
+<hr />
+
+<Editor Id="editorjs-blazor" Name="editorjs-blazor" Value="EditorValue" ValueChanged="OnEditorValueChanged" Tools="EditorTools" Configurations="EditorConfigurations" Class="" Style="border: thin dashed grey; max-height: 40px; padding: 0 10px 0 10px;" />
+
+<hr />
+
+<div class="btn-group" role="group">
+    <button type="button" class="btn btn-outline-primary" @onclick="CheckEditorValueAsync">Check Value (Console)</button>
+    <button type="button" class="btn btn-outline-primary" @onclick="InvokeInsertAsync">Invoke Insert</button>
+</div>
+
+<Editor @ref="Editor02" Id="editorjs-blazor-02" Name="editorjs-blazor-02" Value="EditorValue02" ValueChanged="OnEditorValue02Changed" Tools="EditorTools02" Configurations="EditorConfigurations02" Class="" Style="margin-top: 20px; border: thin dashed grey; padding: 0 20px 0 20px;" />

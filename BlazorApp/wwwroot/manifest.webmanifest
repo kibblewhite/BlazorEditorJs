@@ -1,6 +1,6 @@
 {
-  "name": "BlazorEditorJs.App.Client",
-  "short_name": "BlazorEditorJs.App.Client",
+  "name": "BlazorApp",
+  "short_name": "BlazorApp",
   "id": "./",
   "start_url": "./",
   "display": "standalone",

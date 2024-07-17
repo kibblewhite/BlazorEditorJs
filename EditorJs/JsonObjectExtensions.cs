@@ -1,4 +1,4 @@
-﻿namespace EditorJS;
+﻿namespace EditorJs;
 
 /// <summary>
 /// Provides extension methods for working with <see cref="JsonObject"/>.
