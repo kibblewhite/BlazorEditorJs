@@ -103,6 +103,12 @@
 		<!-- Concatenate via raw File I/O, stripping block comments to reduce size. -->
 		<ConcatenateFiles InputFiles="@(JsFilesToCombine)" OutputFile="wwwroot/lib/editorjs-bundle.js" />
 
+		<!-- Register the generated bundle as content so the Razor SDK includes it as a static web asset. -->
+		<ItemGroup>
+			<Content Remove="wwwroot/lib/editorjs-bundle.js" />
+			<Content Include="wwwroot/lib/editorjs-bundle.js" />
+		</ItemGroup>
+
 	</Target>
 
 	<Target Name="RemoveCombinedJS" BeforeTargets="Clean">
