@@ -31,6 +31,13 @@ jobs:
         with:
           dotnet-version: '10.0.x'
 
+      - name: Install LibMan CLI
+        run: dotnet tool install -g Microsoft.Web.LibraryManager.Cli
+
+      - name: Restore LibMan libraries
+        run: libman restore
+        working-directory: EditorJs
+
       - name: Publish BlazorApp
         run: dotnet publish BlazorApp/BlazorApp.csproj --configuration Release --output ./publish
 
