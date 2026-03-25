@@ -38,11 +38,19 @@ jobs:
         run: libman restore
         working-directory: EditorJs
 
+      - name: Build solution
+        run: dotnet build --configuration Release
+
       - name: Publish BlazorApp
-        run: dotnet publish BlazorApp/BlazorApp.csproj --configuration Release --output ./publish
+        run: dotnet publish BlazorApp/BlazorApp.csproj --configuration Release --no-build --output ./publish
 
       - name: Rewrite base href for GitHub Pages
         run: sed -i 's|<base href="/" />|<base href="/${{ github.event.repository.name }}/" />|' ./publish/wwwroot/index.html
+
+      - name: Disable service worker
+        run: |
+          sed -i '/navigator\.serviceWorker\.register/d' ./publish/wwwroot/index.html
+          echo 'self.addEventListener("fetch", () => { });' > ./publish/wwwroot/service-worker.published.js
 
       - name: Add .nojekyll
         run: touch ./publish/wwwroot/.nojekyll
