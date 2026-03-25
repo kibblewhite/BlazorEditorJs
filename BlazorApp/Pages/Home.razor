@@ -1,21 +1,36 @@
-﻿@page "/"
+@page "/"
 @using EditorJs
 
 <PageTitle>Home</PageTitle>
 
 <h1>Hello, world!</h1>
 
-Welcome to your new app.
+<Editor @ref="Editor" Id="editorjs-blazor" Name="editorjs-blazor" Value="EditorValue" ProvisioningCallbacks="ProvisioningMonitor.EventsCallbacksHandlerAsync" ValueChanged="OnEditorValueChanged" Tools="EditorTools" Configurations="EditorConfigurations" EnterKeyDownCapture="EnterKeyDownCaptureAsync" />
+
+<nav>
+    <button type="button" @onclick="CheckEditorValueAsync">Check Value (Console)</button>
+    <button type="button" @onclick="InvokeInsertAsync">Invoke Insert</button>
+    <button type="button" @onclick="ToggleEditor02ReadOnlyAsync">Toggle ReadOnly (Editor 02)</button>
+</nav>
+
+<Editor @ref="Editor02" Id="editorjs-blazor-02" Name="editorjs-blazor-02" Value="EditorValue02" ProvisioningCallbacks="ProvisioningMonitor.EventsCallbacksHandlerAsync" ValueChanged="OnEditorValue02Changed" Tools="EditorTools02" Configurations="EditorConfigurations02" />
+
+<h3>RTL Editor</h3>
+
+<nav>
+    <button type="button" @onclick="CheckEditorValueRtlAsync">Check RTL Value (Console)</button>
+</nav>
+
+<Editor @ref="EditorRtl" Id="editorjs-blazor-rtl" Name="editorjs-blazor-rtl" Value="EditorValueRtl" ProvisioningCallbacks="ProvisioningMonitor.EventsCallbacksHandlerAsync" ValueChanged="OnEditorValueRtlChanged" Tools="EditorToolsRtl" Configurations="EditorConfigurationsRtl" />
 
 <hr />
 
-<Editor Id="editorjs-blazor" Name="editorjs-blazor" Value="EditorValue" ValueChanged="OnEditorValueChanged" Tools="EditorTools" Configurations="EditorConfigurations" Class="" Style="border: thin dashed grey; max-height: 40px; padding: 0 10px 0 10px;" />
+<h3>Showcase Editor</h3>
+
+<Editor @ref="EditorShowcase" Id="editorjs-blazor-showcase" Name="editorjs-blazor-showcase" Value="EditorValueShowcase" ProvisioningCallbacks="ProvisioningMonitor.EventsCallbacksHandlerAsync" ValueChanged="OnEditorValueShowcaseChanged" Tools="EditorToolsShowcase" Configurations="EditorConfigurationsShowcase" />
 
 <hr />
 
-<div class="btn-group" role="group">
-    <button type="button" class="btn btn-outline-primary" @onclick="CheckEditorValueAsync">Check Value (Console)</button>
-    <button type="button" class="btn btn-outline-primary" @onclick="InvokeInsertAsync">Invoke Insert</button>
-</div>
+<h3>External Plugins Editor</h3>
 
-<Editor @ref="Editor02" Id="editorjs-blazor-02" Name="editorjs-blazor-02" Value="EditorValue02" ValueChanged="OnEditorValue02Changed" Tools="EditorTools02" Configurations="EditorConfigurations02" Class="" Style="margin-top: 20px; border: thin dashed grey; padding: 0 20px 0 20px;" />
+<Editor @ref="EditorExternal" Id="editorjs-blazor-external" Name="editorjs-blazor-external" Value="EditorValueExternal" ProvisioningCallbacks="ProvisioningMonitor.EventsCallbacksHandlerAsync" ValueChanged="OnEditorValueExternalChanged" Tools="EditorToolsExternal" Configurations="EditorConfigurationsExternal" />

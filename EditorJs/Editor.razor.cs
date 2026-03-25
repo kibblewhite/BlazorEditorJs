@@ -4,6 +4,8 @@ public partial class Editor : ComponentBase
 {
     [Inject] public required EditorJsInterop EditorJsInterop { get; init; }
     [Parameter] public EventCallback<JsonObject> ValueChanged { get; init; }
+    [Parameter] public EventCallback<JsonObject> EnterKeyDownCapture { get; init; }
+    [Parameter] public EventCallback<ProvisioningStatus> ProvisioningCallbacks { get; init; }
     [Parameter] public JsonObject Value { get => _value; set => _value = value; }
     [Parameter] public required string Id { get; set; }
     [Parameter] public string? Name { get; init; }
@@ -16,22 +18,15 @@ public partial class Editor : ComponentBase
     private JsonObject _value = [];
     public ElementReference ElementReference;
 
-    /// <summary>
-    /// Gets the default JSON configurations for editor tools as a string.
-    /// </summary>
-    /// <remarks>
-    /// This property provides access to the default JSON configurations for various editor tools.
-    /// The string is maintained based on the contents of the 'libman.json' file and is intended
-    /// to help newer developers get started quickly with default configurations.
-    /// More detailed information about customizing tool options can be found in the README.md files.
-    /// </remarks>
-    public static string DefaultEditorToolsConfigurationsJSON => _default_editor_tools_configurations_json;
-    private static readonly string _default_editor_tools_configurations_json = """
-            {"LinkTool":{"LoadActions":{"LoadProviderClassFunctionDefault":"LinkTool","OptionsNamingScheme":"CamelCase","OverrideOptionsKey":"linkTools"},"options":null},"List":{"LoadActions":{"OptionsNamingScheme":"CamelCase"},"options":{"inlineToolbar":true,"shortcut":"CMD+SHIFT+L"}},"Header":{"LoadActions":{"OptionsNamingScheme":"CamelCase"}},"Warning":{"LoadActions":{"OptionsNamingScheme":"CamelCase"}},"Marker":{"LoadActions":{"OptionsNamingScheme":"CamelCase"}},"NestedList":{"LoadActions":{"OptionsNamingScheme":"CamelCase","OverrideOptionsKey":"list"}},"Quote":{"LoadActions":{"OptionsNamingScheme":"CamelCase"}},"Embed":{"LoadActions":{"OptionsNamingScheme":"CamelCase"},"options":{"config":{"services":{"instagram":true}}}}}
-        """;
-
     private bool _should_render;
     protected override bool ShouldRender() => _should_render;
+
+    protected override Task OnInitializedAsync()
+        => ProvisioningCallbacks.InvokeAsync(new ProvisioningStatus
+        {
+            Id = Id,
+            State = ProvisioningState.Constructed
+        });
 
     protected override async Task OnAfterRenderAsync(bool first_render)
     {
@@ -41,8 +36,14 @@ public partial class Editor : ComponentBase
             return;
         }
 
-        await EditorJsInterop.InitAsync(ElementReference, Id, Value, Tools, Configurations, OnContentChangedRequestAsync);
+        await EditorJsInterop.InitAsync(ElementReference, Id, Value, Tools, Configurations, OnContentChangedRequestAsync, OnEnterKeyDownRequestAsync);
         _should_render = false;
+
+        await ProvisioningCallbacks.InvokeAsync(new ProvisioningStatus
+        {
+            Id = Id,
+            State = ProvisioningState.Initialised
+        });
     }
 
     /// <summary>
@@ -67,6 +68,15 @@ public partial class Editor : ComponentBase
     }
 
     /// <summary>
+    /// Handles the Enter key down event and triggers the associated callback asynchronously.
+    /// </summary>
+    /// <remarks>This method invokes the <see cref="EnterKeyDownCapture"/> callback with the current <see
+    /// cref="Value"/>. Ensure that the callback is properly configured to handle the event.</remarks>
+    /// <returns>A <see cref="Task"/> that represents the asynchronous operation.</returns>
+    public Task OnEnterKeyDownRequestAsync()
+        => EnterKeyDownCapture.InvokeAsync(Value);
+
+    /// <summary>
     /// Renders the editorjs with the new provided value, overriding the current value.
     /// This method uses <see cref="EqualityComparer{T}"/> to check if the new value is equal to the current value and if so, it will not execute the render function.
     /// </summary>
@@ -82,7 +92,36 @@ public partial class Editor : ComponentBase
         await ValueChanged.InvokeAsync(jsob);
         await EditorJsInterop.RenderAsync(ElementReference, Id, jsob);
         Value = jsob;
+
+        await ProvisioningCallbacks.InvokeAsync(new ProvisioningStatus
+        {
+            Id = Id,
+            State = ProvisioningState.Rendered
+        });
     }
+
+    /// <summary>
+    /// Clears the content of the editor, resetting it to an empty state.
+    /// </summary>
+    /// <remarks>This method asynchronously clears the editor's content. After calling this method,  the
+    /// editor will be empty and ready for new input.</remarks>
+    /// <returns>A <see cref="Task"/> that represents the asynchronous operation.</returns>
+    public Task Clear() => EditorJsInterop.ClearAsync(ElementReference, Id);
+
+    /// <summary>
+    /// Sets focus to the editor element.
+    /// </summary>
+    /// <param name="on_last">A boolean value indicating whether to focus at the end of the last element within the editor. <see langword="true"/> focuses
+    /// on the last element; <see langword="false"/> focuses on the first element.</param>
+    /// <returns>A <see cref="Task"/> that represents the asynchronous operation of setting focus.</returns>
+    public Task Focus(bool on_last = false) => EditorJsInterop.FocusAsync(ElementReference, Id, on_last);
+
+    /// <summary>
+    /// Toggles the read-only state of the editor.
+    /// </summary>
+    /// <param name="read_only"><see langword="true"/> to set the editor to read-only mode; <see langword="false"/> to enable editing.</param>
+    /// <returns>A <see cref="Task"/> that represents the asynchronous operation.</returns>
+    public Task ToggleAsync(bool read_only) => EditorJsInterop.ToggleAsync(ElementReference, Id, read_only);
 
     /// <summary>
     /// Parses a JSON string into a <see cref="JsonObject"/> for use with the <see cref="Value"/> parameter.
@@ -96,7 +135,7 @@ public partial class Editor : ComponentBase
         => JsonNode.Parse(json)?.AsObject() ?? [];
 
     /// <summary>
-    /// Provides a utility method for creating an empty <see cref="JsonObject"/> that can be used as the <see cref="Value"/> parameter for <see cref="EditorX"/>.
+    /// Provides a utility method for creating an empty <see cref="JsonObject"/> that can be used as the <see cref="Value"/> parameter.
     /// </summary>
     /// <remarks>
     /// The method creates a new instance of <see cref="JsonObject"/> with a single property "blocks" which is an empty JSON array.
@@ -106,23 +145,6 @@ public partial class Editor : ComponentBase
     /// </returns>
     public static JsonObject CreateEmptyJsonObject()
         => JsonNode.Parse("{ \"blocks\": [] }")?.AsObject() ?? [];
-
-    /// <summary>
-    /// Retrieves the default editor tool configurations as a <see cref="JsonObject"/>.
-    /// </summary>
-    /// <remarks>
-    /// This method is designed to help newer developers get started quickly with default
-    /// configurations for the editor tools. More detailed information about customizing
-    /// tool options can be found in the README.md files. The string
-    /// <see cref="DefaultEditorToolsConfigurationsJSON"/> should be
-    /// maintained based on the contents of the 'libman.json'.
-    /// </remarks>
-    /// <returns>
-    /// A <see cref="JsonObject"/> containing the default configurations for various editor tools.
-    /// If parsing fails or the default configurations are not available, it returns an empty <see cref="JsonObject"/>.
-    /// </returns>
-    public static JsonObject DefaultEditorJsonToolOptions()
-        => ParseEditorJsonToolOptions(_default_editor_tools_configurations_json);
 
     /// <summary>
     /// Parses a JSON string into a <see cref="JsonObject"/> for use with the <see cref="Tools"/> parameter.
@@ -144,13 +166,39 @@ public partial class Editor : ComponentBase
     }
 
     /// <summary>
-    /// Checks if the specified <see cref="JsonObject"/> has the required elements.
+    /// Checks that every tool entry in the root <see cref="JsonObject"/> contains a
+    /// <c>LoadActions</c> child with an <c>OptionsNamingScheme</c> property.
     /// </summary>
-    /// <remarks>Missing required elements in JSON structure: checks for the presence of "LoadActions" and "OptionsNamingScheme".</remarks>
-    /// <param name="json_object">The <see cref="JsonObject"/> to check for required elements.</param>
+    /// <param name="json_object">The root tool configurations <see cref="JsonObject"/>.</param>
     /// <returns>
-    /// <c>true</c> if the required elements are present in the <see cref="JsonObject"/>; otherwise, <c>false</c>.
+    /// <c>true</c> if all tool entries have the required structure; otherwise, <c>false</c>.
     /// </returns>
-    private static bool HasRequiredElements(JsonObject json_object) =>
-        json_object.ContainsKey("LoadActions") is false || json_object.ContainsKey("OptionsNamingScheme") is false;
+    private static bool HasRequiredElements(JsonObject json_object)
+    {
+        if (json_object.Count is 0)
+        {
+            return false;
+        }
+
+        foreach ((string _, JsonNode? node) in json_object)
+        {
+            if (node is not JsonObject tool_entry)
+            {
+                return false;
+            }
+
+            if (tool_entry.TryGetPropertyValue("LoadActions", out JsonNode? load_actions_node) is false
+                || load_actions_node is not JsonObject load_actions)
+            {
+                return false;
+            }
+
+            if (load_actions.ContainsKey("OptionsNamingScheme") is false)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
 }

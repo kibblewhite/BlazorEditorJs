@@ -354,4 +354,5 @@ MigrationBackup/
 /EditorJs/wwwroot/lib/editorjs
 /EditorJs/wwwroot/lib/editorjs-bundle.js
 /Solution Items/nuget-publish-command.md
-/Solution Items/nuget-publish-command.md
+
+/.claude/**

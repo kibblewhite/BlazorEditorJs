@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<RootNamespace>EditorJs</RootNamespace>
+		<Description>Configuration builders and JSON extensions for the EditorJS.io Blazor component.</Description>
+		<PackageTags>editorjs;blazor;blazor-editorjs;editorjs-configuration</PackageTags>
+	</PropertyGroup>
+
+</Project>

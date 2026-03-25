@@ -1,21 +1,11 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+<Project Sdk="Microsoft.NET.Sdk.Razor">
 
 	<PropertyGroup>
-		<TargetFramework>net8.0</TargetFramework>
-		<LangVersion>12.0</LangVersion>
-		<Nullable>enable</Nullable>
-		<ImplicitUsings>enable</ImplicitUsings>
-		<Version>1.2.0.22</Version>
 		<AssemblyName>EditorJs</AssemblyName>
-		<RootNamespace>EditorJs</RootNamespace>
-		<AddRazorSupportForMvc>true</AddRazorSupportForMvc>
 		<Description>A Blazor component implementation for EditorJS.io a block styled editor.</Description>
 		<PackageTags>editorjs;blazor;blazor-editorjs;editorjs-blazor</PackageTags>
-		<PackageIcon>editorjs.png</PackageIcon>
 		<ApplicationIcon>editorjs.ico</ApplicationIcon>
-		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-		<IsPackable>true</IsPackable>
+		<NoDefaultExcludes>true</NoDefaultExcludes>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -23,16 +13,38 @@
 	</ItemGroup>
 
 	<ItemGroup>
+
+		<!-- -->
+		<Content Remove="libman.json" />
+		<None Include="libman.json" />
 		<None Include="editorjs.ico" Pack="true" PackagePath="" />
-		<None Include="editorjs.png" Pack="true" PackagePath="" />
-		<Content Remove="wwwroot\lib\editorjs\**\.*" />
+
+		<!-- Remove all wwwroot/lib files from default inclusion -->
+		<Content Remove="wwwroot\lib\editorjs\**\*.*" />
+
+		<!-- Re-add only .min.js files -->
+		<Content Include="wwwroot\lib\editorjs\**\*.min.js">
+			<Pack>true</Pack>
+			<PackagePath>staticwebassets\lib\</PackagePath>
+		</Content>
+
+		<!-- Re-add only .min.js.map files -->
+		<Content Include="wwwroot\lib\editorjs\**\*.min.js.map">
+			<Pack>true</Pack>
+			<PackagePath>staticwebassets\lib\</PackagePath>
+		</Content>
+
 	</ItemGroup>
 
 	<Import Project="libman.targets" />
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.6" />
-		<PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="2.1.175" />
+		<ProjectReference Include="..\EditorJs.Configuration\EditorJs.Configuration.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="10.0.5" />
+		<PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="3.0.71" />
 	</ItemGroup>
 
 </Project>

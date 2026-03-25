@@ -1,20 +1,107 @@
-﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+	<!--
+		Inline C# task that concatenates JavaScript files using raw File I/O, bypassing
+		MSBuild item evaluation which strips backslash characters from content (breaking
+		JavaScript regex literals like \/\/ and \.).
+
+		Block comments (/* ... */) are stripped during concatenation to reduce bundle size.
+		String literals (double, single, template) are tracked so that /* sequences inside
+		strings are preserved. Single-line comments (//) are left untouched because minified
+		JavaScript does not contain them and the // sequence appears legitimately inside
+		regex literals and URL strings.
+	-->
+	<UsingTask TaskName="ConcatenateFiles" TaskFactory="RoslynCodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)/Microsoft.Build.Tasks.Core.dll">
+		<ParameterGroup>
+			<InputFiles ParameterType="Microsoft.Build.Framework.ITaskItem[]" Required="true" />
+			<OutputFile ParameterType="System.String" Required="true" />
+		</ParameterGroup>
+		<Task>
+			<Using Namespace="System.IO" />
+			<Using Namespace="System.Text" />
+			<Using Namespace="System.Text.RegularExpressions" />
+			<Code Type="Fragment" Language="cs">
+				<![CDATA[
+				StringBuilder combined = new StringBuilder();
+				foreach (ITaskItem item in InputFiles)
+				{
+					combined.AppendLine(File.ReadAllText(item.ItemSpec));
+				}
+
+				string content = combined.ToString();
+				int len = content.Length;
+				StringBuilder output = new StringBuilder(len);
+
+				for (int i = 0; i < len; i++)
+				{
+					char c = content[i];
+
+					// String literals — copy verbatim (handles escape sequences)
+					if (c == '"' || c == '\'' || c == '`')
+					{
+						char quote = c;
+						output.Append(c);
+						i++;
+						while (i < len)
+						{
+							if (content[i] == '\\' && i + 1 < len)
+							{
+								output.Append(content[i]);
+								output.Append(content[i + 1]);
+								i += 2;
+								continue;
+							}
+							if (content[i] == quote)
+							{
+								output.Append(content[i]);
+								i++;
+								break;
+							}
+							output.Append(content[i]);
+							i++;
+						}
+						i--; // outer loop increments
+						continue;
+					}
+
+					// Block comments — skip entirely
+					if (c == '/' && i + 1 < len && content[i + 1] == '*')
+					{
+						i += 2;
+						while (i + 1 < len)
+						{
+							if (content[i] == '*' && content[i + 1] == '/')
+							{
+								i++; // outer loop increments past the /
+								break;
+							}
+							i++;
+						}
+						continue;
+					}
+
+					output.Append(c);
+				}
+
+				// Collapse runs of blank lines left after comment removal
+				string result = Regex.Replace(output.ToString(), @"(\r?\n\s*){2,}", "\n");
+
+				File.WriteAllText(OutputFile, result, new UTF8Encoding(encoderShouldEmitUTF8Identifier: false));
+			]]>
+			</Code>
+		</Task>
+	</UsingTask>
 
 	<!-- Concatenate scripts on Build and creates the 'wwwroot/lib/editorjs-bundle.js' file -->
-	<Target Name="BuildCombinedJS" BeforeTargets="Build">
+	<Target Name="BuildCombinedJS" BeforeTargets="Build;ResolveProjectStaticWebAssets" Condition="'$(BuildingProject)' != 'false'">
 
 		<!-- List of all the files to concatenate. -->
 		<CreateItem Include="wwwroot/lib/editorjs/*/dist/*.min.js">
 			<Output TaskParameter="Include" ItemName="JsFilesToCombine" />
 		</CreateItem>
 
-		<!-- Read the contents of the files (preserving tabs/spaces). -->
-		<ReadLinesFromFile File="%(JsFilesToCombine.FullPath)">
-			<Output TaskParameter="Lines" ItemName="JsLines" /> 
-		</ReadLinesFromFile>
-
-		<!-- Write the result to a single file. -->
-		<WriteLinesToFile File="wwwroot/lib/editorjs-bundle.js" Lines="@(JsLines)" Overwrite="true" Encoding="UTF-8" />
+		<!-- Concatenate via raw File I/O, stripping block comments to reduce size. -->
+		<ConcatenateFiles InputFiles="@(JsFilesToCombine)" OutputFile="wwwroot/lib/editorjs-bundle.js" />
 
 	</Target>
 
@@ -22,5 +109,5 @@
 		<Message Text="Deleting wwwroot/lib/editorjs-bundle.js"/>
 		<Delete Files="wwwroot/lib/editorjs-bundle.js" />
 	</Target>
-	
+
 </Project>
