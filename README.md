@@ -1,12 +1,15 @@
 [![GitHub Repo](https://img.shields.io/badge/GitHub-Repo-green?logo=github&style=flat-square)](https://github.com/kibblewhite/BlazorEditorJs)
-[![GitHub Licence](https://img.shields.io/github/license/kibblewhite/BlazorEditorJs?logo=github&style=flat-square)](https://github.com/kibblewhite/BlazorEditorJs/blob/master/LICENSE)
+[![GitHub Licence](https://img.shields.io/github/license/kibblewhite/BlazorEditorJs?logo=github&style=flat-square)](https://github.com/kibblewhite/BlazorEditorJs/blob/main/LICENSE)
 [![GitHub Stars](https://img.shields.io/github/stars/kibblewhite/BlazorEditorJs?style=flat-square&logo=github)](https://github.com/kibblewhite/BlazorEditorJs/stargazers)
 [![Nuget Version](https://img.shields.io/nuget/v/EditorJs?label=nuget%20version&logo=nuget&style=flat-square)](https://www.nuget.org/packages/EditorJs/)
 [![Nuget Downloads](https://img.shields.io/nuget/dt/EditorJs?label=nuget%20downloads&logo=nuget&style=flat-square)](https://www.nuget.org/packages/EditorJs/)
+[![Live Demo](https://img.shields.io/badge/Live-Demo-blue?style=flat-square&logo=blazor)](https://kibblewhite.github.io/BlazorEditorJs/)
 
 # blazor-editorjs
 
 A Blazor component library wrapping [EditorJS](https://editorjs.io/) — a block-styled editor with clean JSON output. This package provides an `<Editor />` component, a fluent builder API for tool and editor configuration, JavaScript interop for full editor lifecycle control, and provisioning state tracking for multi-editor pages.
+
+### [Try the Live Demo](https://kibblewhite.github.io/BlazorEditorJs/)
 
 ## Packages
 

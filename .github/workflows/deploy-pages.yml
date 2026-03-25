@@ -1,0 +1,53 @@
+name: Deploy BlazorApp to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Publish BlazorApp
+        run: dotnet publish BlazorApp/BlazorApp.csproj --configuration Release --output ./publish
+
+      - name: Rewrite base href for GitHub Pages
+        run: sed -i 's|<base href="/" />|<base href="/${{ github.event.repository.name }}/" />|' ./publish/wwwroot/index.html
+
+      - name: Add .nojekyll
+        run: touch ./publish/wwwroot/.nojekyll
+
+      - name: Copy index.html to 404.html for SPA routing
+        run: cp ./publish/wwwroot/index.html ./publish/wwwroot/404.html
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./publish/wwwroot
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
