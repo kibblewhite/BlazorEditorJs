@@ -226,10 +226,7 @@ public partial class Home : ComponentBase
                     }
                 };
             })
-            .RawTool(options =>
-            {
-                options["config"] = new JsonObject { ["placeholder"] = "Enter raw HTML..." };
-            })
+            .RawTool(options => options["config"] = new JsonObject { ["placeholder"] = "Enter raw HTML..." })
             .Build();
 
         EditorConfigurationsShowcase = EditorConfigBuilder.Create()
@@ -707,21 +704,15 @@ public partial class Home : ComponentBase
                 ["defaultType"] = "info",
                 ["messagePlaceholder"] = "Enter alert message..."
             })
-            .Tool("Color", "ColorPlugin", naming_scheme: NamingScheme.PascalCase, configure: options =>
+            .Tool("Color", "ColorPlugin", naming_scheme: NamingScheme.PascalCase, configure: options => options["config"] = new JsonObject
             {
-                options["config"] = new JsonObject
-                {
-                    ["type"] = "text",
-                    ["defaultColor"] = "#d63031"
-                };
+                ["type"] = "text",
+                ["defaultColor"] = "#d63031"
             })
-            .Tool("ColorMarker", "ColorPlugin", override_options_key: "ColorMarker", naming_scheme: NamingScheme.PascalCase, configure: options =>
+            .Tool("ColorMarker", "ColorPlugin", override_options_key: "ColorMarker", naming_scheme: NamingScheme.PascalCase, configure: options => options["config"] = new JsonObject
             {
-                options["config"] = new JsonObject
-                {
-                    ["type"] = "marker",
-                    ["defaultColor"] = "#fdcb6e"
-                };
+                ["type"] = "marker",
+                ["defaultColor"] = "#fdcb6e"
             })
             .Tool("Strikethrough", "Strikethrough")
             .Build();

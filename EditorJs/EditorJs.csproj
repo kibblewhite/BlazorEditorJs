@@ -22,6 +22,9 @@
 		<!-- Remove all wwwroot/lib files from default inclusion -->
 		<Content Remove="wwwroot\lib\editorjs\**\*.*" />
 
+		<!-- Exclude the generated bundle — it is re-added by the BuildCombinedJS target in libman.targets -->
+		<Content Remove="wwwroot\lib\editorjs-bundle.js" />
+
 		<!-- Re-add only .min.js files -->
 		<Content Include="wwwroot\lib\editorjs\**\*.min.js">
 			<Pack>true</Pack>
